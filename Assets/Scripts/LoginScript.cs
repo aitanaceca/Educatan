@@ -43,6 +43,7 @@ public class LoginScript : MonoBehaviour
         string age = ageInputField.text;
             if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(age)) {
                 print("Login Success");
+                SceneManager.LoadScene((int) Scenes.MAIN);
             } else {
                 print("Wrong login");
             }
