@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using Scripts.Scenes;
 
 public class LoginScript : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class LoginScript : MonoBehaviour
     public GameObject nameError;
     public GameObject ageError;
     public Button loginButton;
+    public Button helpButton;
 
     private TMP_InputField nameInputField;
     private TMP_InputField ageInputField;
@@ -27,14 +30,18 @@ public class LoginScript : MonoBehaviour
         nameErrorText.enabled = false;
         ageErrorText.enabled = false;
         loginButton.onClick.AddListener(ValidateLogin);
+        helpButton.onClick.AddListener(HelpView);
+
+    }
+
+    private void HelpView() {
+        SceneManager.LoadScene((int) Scenes.HELP);
     }
 
     private void ValidateLogin() {
         string name = nameInputField.text;
-            string age = ageInputField.text;
+        string age = ageInputField.text;
             if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(age)) {
-                print(name);
-                print(age);
                 print("Login Success");
             } else {
                 print("Wrong login");
