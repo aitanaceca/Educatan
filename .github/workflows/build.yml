@@ -44,16 +44,5 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"aitanaceca_Educatan" /o:"aitanaceca-1" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          UNITY_PATH="/opt/unity/Editor/Unity"
-          PROJECT_PATH="../"
-          BUILD_TARGET="StandaloneLinux64"
-          BUILD_PATH="../build"
-
-          $UNITY_PATH \
-            -batchmode \
-            -quit \
-            -projectPath $PROJECT_PATH \
-            -executeMethod LoginScript \
-            -buildTarget $BUILD_TARGET \
-            -buildDirectory $BUILD_PATH
+          "/opt/unity/Editor/Unity" -quit -batchmode -projectPath "../" -executeMethod UnityEditor.BuildPipeline.BuildPlayer -buildTarget None -buildSystem=Gradle -customBuildTarget=Android -customBuildName=Dummy -customBuildPath=Dummy -customBuildOptions=ScriptOnlyBuild
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
