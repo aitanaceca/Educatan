@@ -57,9 +57,6 @@ jobs:
         with:
           unityVersion: 2021.3.22f1
           projectBaseDir: ./../
-
-      - name: Run SonarCloud analysis
-        uses: actions/checkout@v3
       
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
