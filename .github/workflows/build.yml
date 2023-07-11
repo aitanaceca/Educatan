@@ -22,7 +22,7 @@ jobs:
 
       - name: Build Unity project
         run: |
-          UNITY_LICENSE_CONTENT=${{ secrets.UNITY_LICENSE }}
+          UNITY_LICENSE=${{ secrets.UNITY_LICENSE }}
           unity-editor build -projectPath ../../ -quit -batchmode
 
       - name: Run SonarCloud analysis
