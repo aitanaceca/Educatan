@@ -57,11 +57,14 @@ jobs:
         with:
           unityVersion: 2021.3.22f1
           projectBaseDir: ./../
+
+      - name: Copy sonar-project.properties
+        run: cp .github/workflows/sonar-project.properties ./
       
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
             projectBaseDir: ./../
