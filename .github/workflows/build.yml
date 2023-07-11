@@ -29,14 +29,22 @@ jobs:
           UNITY_LICENSE_CONTENT=${{ secrets.UNITY_LICENSE }}
           unity-editor build -projectPath ../../ -quit -batchmode
 
-      - name: Run SonarCloud analysis
-        uses: sonarsource/sonarcloud-github-action@master
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          projectBaseDir: ../../
-          extraProperties: |
-            sonar.exclusions=Assets/Editor/**
+            projectBaseDir: ../../
+            extraProperties: |
+                sonar.exclusions=Assets/Editor/**
 
 #name: Prueba
 #on:
