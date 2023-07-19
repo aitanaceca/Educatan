@@ -1,9 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Assets",
-    "\\Assets\\Scripts"
+    "\\.github\\workflows"
   ],
-  "SelectedNode": "\\Assets\\Scripts\\LoginScript.cs",
+  "SelectedNode": "\\sonar-project.properties",
   "PreviewInSolutionExplorer": false
 }
