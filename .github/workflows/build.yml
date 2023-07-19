@@ -15,39 +15,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      #- name: Install Docker
-      #  run: |
-      #    sudo apt-get update && \
-      #    sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common && \
-      #    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && \
-      #    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
-      #    sudo apt-get update && \
-      #    sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-
-      #- name: Set up Unity
-      #  uses: game-ci/unity-builder@v2
-      #  env:
-      #      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-      #      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-      #      UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-      #  with:
-      #    unityVersion: 2021.3.22f1
-
-      #- name: Build Unity project
-      #  run: |
-      #    UNITY_LICENSE_CONTENT=${{ secrets.UNITY_LICENSE }}
-      #    unity-editor build -projectPath ../../ -quit -batchmode
-
-      #- name: SonarCloud Scan
-      #  uses: SonarSource/sonarcloud-github-action@master
-      #  env:
-      #      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
-      #      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #  with:
-      #      projectBaseDir: ../../
-      #      extraProperties: |
-      #          sonar.exclusions=Assets/Editor/**
-
       - name: Set up Unity
         uses: game-ci/unity-builder@v2
         env:
@@ -57,17 +24,21 @@ jobs:
         with:
           unityVersion: 2021.3.22f1
           projectBaseDir: ./../
-      
+
+      ## Hasta aquí funciona correctamente.
+
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-            projectBaseDir: ./../
-            extraProperties: |
-                sonar.projectKey=aitanaceca_Educatan
-                sonar.organization=aitanaceca-1
 
 #name: Prueba
 #on:
