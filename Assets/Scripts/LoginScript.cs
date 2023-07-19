@@ -8,7 +8,7 @@ using Scripts.Scenes;
 
 public class LoginScript : MonoBehaviour
 {
-    //public GameObject nameInput;
+    public GameObject nameInput;
     public GameObject ageInput;
     public GameObject nameError;
     public GameObject ageError;
