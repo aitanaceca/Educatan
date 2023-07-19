@@ -9,6 +9,7 @@ on:
 
 jobs:
   build:
+    name: Build Application
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +27,7 @@ jobs:
           projectBaseDir: ./../
 
   sonarcloud:
-    name: SonarCloud
+    name: SonarCloud Scanner
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
