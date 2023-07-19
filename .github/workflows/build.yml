@@ -16,7 +16,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Unity
+      - name: Set up Unity Install
+        uses: game-ci/unity-actions@v1
+
+      - name: Install Unity packages
+        run: |
+          unity-actions install
+
+      - name: Set up Unity Builder
         uses: game-ci/unity-builder@v2
         env:
             UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
