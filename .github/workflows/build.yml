@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Unity Install
-        uses: game-ci/unity-actions@v1
+        uses: game-ci/unity-actions
 
       - name: Install Unity packages
         run: |
