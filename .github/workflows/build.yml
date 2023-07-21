@@ -14,13 +14,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3   
-        
-      - name: Use upm-ci
-        uses: game-ci/upm-ci
+        uses: actions/checkout@v3
+
+      - name: Set up Unity Builder
+        uses: game-ci/unity-builder@v2
 
       - name: Install dependencies
-        run: upm-ci install
+        run: unity-actions upm install
 
       - name: Set up Unity Builder
         uses: game-ci/unity-builder@v2
