@@ -1,8 +1,8 @@
 namespace Scripts.Levels {
     public enum Level {
-        ONE = 0,
-        TWO = 1,
-        THREE = 2,
-        FOUR = 3,
+        ONE = 1,
+        TWO = 2,
+        THREE = 3,
+        FOUR = 4,
     }
 }
