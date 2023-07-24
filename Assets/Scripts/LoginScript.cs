@@ -35,7 +35,7 @@ public class LoginScript : MonoBehaviour
     }
 
     private void HelpView() {
-        SceneManager.LoadScene((int) Scenes.HELP);
+        SceneManager.LoadScene((int)GameScene.HELP);
     }
 
     private void ValidateLogin() {
@@ -43,7 +43,7 @@ public class LoginScript : MonoBehaviour
         string age = ageInputField.text;
             if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(age)) {
                 print("Login Success");
-                SceneManager.LoadScene((int) Scenes.MAIN);
+                SceneManager.LoadScene((int)GameScene.MAIN);
             } else {
                 print("Wrong login");
             }

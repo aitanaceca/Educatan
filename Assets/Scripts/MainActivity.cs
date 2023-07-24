@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;
-using Scripts.Scenes;
 using UnityEngine;
 using UnityEngine.ProBuilder;
 using UnityEngine.ProBuilder.MeshOperations;
 using System;
+using Scripts.LevelElements;
+using Scripts.Levels;
+using System.Reflection;
 
 public class MainActivity : MonoBehaviour
 {
@@ -39,6 +39,7 @@ public class MainActivity : MonoBehaviour
 
     private void Start()
     {
+        int currentLevel = 2;
         List<ProBuilderMesh> elements = new()
         {
             element1,
@@ -62,16 +63,39 @@ public class MainActivity : MonoBehaviour
             element19
         };
 
-        List<Material> materials = new() { waterMaterial, sandMaterial, fireMaterial, grassMaterial, woodMaterial };
-
-        System.Random random = new System.Random();
+        LevelElements levelElements = new(currentLevel);
 
         foreach (var elem in elements)
         {
-            // Genera un número aleatorio entre 0 y 4
-            int randomNumber = random.Next(0, 5);
+            string randomElement = levelElements.GetRandomElement();
 
-            elem.GetComponent<MeshRenderer>().sharedMaterial = materials[randomNumber];
+            switch (randomElement)
+            {
+                case "WaterMaterial":
+                    elem.GetComponent<MeshRenderer>().sharedMaterial = waterMaterial;
+                    levelElements.WaterMaterial -= 1;
+                    break;
+
+                case "SandMaterial":
+                    elem.GetComponent<MeshRenderer>().sharedMaterial = sandMaterial;
+                    levelElements.SandMaterial -= 1;
+                    break;
+
+                case "FireMaterial":
+                    elem.GetComponent<MeshRenderer>().sharedMaterial = fireMaterial;
+                    levelElements.FireMaterial -= 1;
+                    break;
+
+                case "GrassMaterial":
+                    elem.GetComponent<MeshRenderer>().sharedMaterial = grassMaterial;
+                    levelElements.GrassMaterial -= 1;
+                    break;
+
+                case "WoodMaterial":
+                    elem.GetComponent<MeshRenderer>().sharedMaterial = woodMaterial;
+                    levelElements.WoodMaterial -= 1;
+                    break;
+            }
         }
     }
 }
