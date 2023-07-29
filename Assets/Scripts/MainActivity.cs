@@ -8,6 +8,7 @@ using System;
 using Scripts.LevelElements;
 using Scripts.Levels;
 using System.Reflection;
+using Vuforia;
 
 public class MainActivity : MonoBehaviour
 {
