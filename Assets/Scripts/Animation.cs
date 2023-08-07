@@ -25,7 +25,6 @@ public class Animation : DefaultObserverEventHandler
     {
        if (animator != null && animator.isInitialized && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
-            print("MOSTRAR");
             dice.SetActive(true);
         }
     }
