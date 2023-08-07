@@ -12,6 +12,8 @@ using Vuforia;
 
 public class MainActivity : MonoBehaviour
 {
+    public GameObject dice;
+
     public Material waterMaterial;
     public Material sandMaterial;
     public Material fireMaterial;
@@ -40,6 +42,8 @@ public class MainActivity : MonoBehaviour
 
     private void Start()
     {
+        dice.SetActive(false);
+
         int currentLevel = 2;
         List<ProBuilderMesh> elements = new()
         {
