@@ -23,7 +23,7 @@ public class Animation : DefaultObserverEventHandler
 
     void Update()
     {
-       if (animator != null && animator.isInitialized && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+       if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime * animator.GetCurrentAnimatorStateInfo(0).length >= 9.5)
        {
             dice.SetActive(true);
        }
