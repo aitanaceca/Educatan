@@ -14,9 +14,18 @@ public class Animation : DefaultObserverEventHandler
 {
     public Animator animator;
 
+    public GameObject dice;
+
     protected override void OnTrackingFound()
     {
-        print("HOLA");
         animator.Play("board");
+    }
+
+    void Update()
+    {
+       if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime * animator.GetCurrentAnimatorStateInfo(0).length >= 9.5)
+       {
+            dice.SetActive(true);
+       }
     }
 }
