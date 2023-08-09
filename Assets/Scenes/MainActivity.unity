@@ -5030,7 +5030,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   DiceNumber: 0
-  animator: {fileID: 0}
+  animator: {fileID: 1665344504}
 --- !u!114 &937432847
 MonoBehaviour:
   m_ObjectHideFlags: 0

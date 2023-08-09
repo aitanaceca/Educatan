@@ -63,9 +63,12 @@ public class TouchDice : DefaultObserverEventHandler
 
                     // Genera un número aleatorio entre 0 y 5
                     int randomNumber = random.Next(0, diceAnimations.Count);
-                    print(randomNumber);
 
-                    animator.Play(diceAnimations[0]);
+                    print(diceAnimations[randomNumber]);
+
+                    animator.Play(diceAnimations[randomNumber]);
+
+                    DiceNumber = randomNumber + 1;
                 }
             }
         }
