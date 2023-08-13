@@ -9,10 +9,14 @@ using Scripts.LevelElements;
 using Scripts.Levels;
 using System.Reflection;
 using Vuforia;
+using TMPro;
 
 public class MainActivity : MonoBehaviour
 {
     public GameObject dice;
+    public GameObject DiceNumber;
+
+    private TMP_Text diceNumberText;
 
     public Material waterMaterial;
     public Material sandMaterial;
@@ -43,6 +47,8 @@ public class MainActivity : MonoBehaviour
     private void Start()
     {
         dice.SetActive(false);
+        diceNumberText = DiceNumber.GetComponent<TMP_Text>();
+        diceNumberText.enabled = false;
 
         int currentLevel = 2;
         List<ProBuilderMesh> elements = new()

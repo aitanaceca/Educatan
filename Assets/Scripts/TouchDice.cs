@@ -3,18 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class TouchDice : DefaultObserverEventHandler
 {
-    public int DiceNumber;
+    public GameObject DiceNumber;
+    private TMP_Text diceNumberText;
 
     public Animator animator;
 
     private List<string> diceFaces = new() { "Cara1", "Cara2", "Cara3", "Cara4", "Cara5", "Cara6" };
     private List<string> diceAnimations = new() { "dice1", "dice2", "dice3", "dice4", "dice5", "dice6" };
 
+    private int finalRandomNumber;
+
     void Update()
     {
+        diceNumberText = DiceNumber.GetComponent<TMP_Text>();
+        diceNumberText.enabled = false;
+
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
             RaycastHit hit;
@@ -31,7 +38,8 @@ public class TouchDice : DefaultObserverEventHandler
 
                     animator.Play(diceAnimations[randomNumber]);
 
-                    DiceNumber = randomNumber + 1;
+                    finalRandomNumber = randomNumber + 1;
+                    diceNumberText.text = finalRandomNumber.ToString();
                 }
             }
         }
