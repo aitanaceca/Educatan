@@ -14,7 +14,7 @@ using TMPro;
 public class MainActivity : MonoBehaviour
 {
     public GameObject dice;
-    public GameObject DiceNumber;
+    public GameObject diceNumber;
 
     private TMP_Text diceNumberText;
 
@@ -47,7 +47,7 @@ public class MainActivity : MonoBehaviour
     private void Start()
     {
         dice.SetActive(false);
-        diceNumberText = DiceNumber.GetComponent<TMP_Text>();
+        diceNumberText = diceNumber.GetComponent<TMP_Text>();
         diceNumberText.enabled = false;
 
         int currentLevel = 2;
