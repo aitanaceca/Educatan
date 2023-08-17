@@ -7,10 +7,11 @@ using TMPro;
 
 public class TouchDice : DefaultObserverEventHandler
 {
-    public GameObject DiceNumber;
-    private TMP_Text diceNumberText;
+    public GameObject diceNumber;
 
     public Animator animator;
+
+    private TMP_Text diceNumberText;
 
     private List<string> diceFaces = new() { "Cara1", "Cara2", "Cara3", "Cara4", "Cara5", "Cara6" };
     private List<string> diceAnimations = new() { "dice1", "dice2", "dice3", "dice4", "dice5", "dice6" };
@@ -19,7 +20,7 @@ public class TouchDice : DefaultObserverEventHandler
 
     void Update()
     {
-        diceNumberText = DiceNumber.GetComponent<TMP_Text>();
+        diceNumberText = diceNumber.GetComponent<TMP_Text>();
         diceNumberText.enabled = false;
 
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
