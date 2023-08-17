@@ -109,9 +109,4 @@ public class MainActivity : MonoBehaviour
             }
         }
     }
-
-    public void ShowPossibleElements()
-    {
-
-    }
 }
