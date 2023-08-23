@@ -10,6 +10,7 @@ public class TouchDice : DefaultObserverEventHandler
     public GameObject diceNumber;
 
     public Animator diceAnimator;
+    public Animator boardAnimator;
 
     private TMP_Text diceNumberText;
 
@@ -44,61 +45,51 @@ public class TouchDice : DefaultObserverEventHandler
 
     private List<string> upElementsAnimationNames = new()
     {
-        "UpElemento19",
-        "UpElemento18",
-        "UpElemento17",
-        "UpElemento13",
-        "UpElemento14",
-        "UpElemento15",
-        "UpElemento16",
-        "UpElemento12",
-        "UpElemento11",
-        "UpElemento10",
-        "UpElemento9",
-        "UpElemento8",
-        "UpElemento4",
-        "UpElemento5",
-        "UpElemento6",
-        "UpElemento7",
-        "UpElemento3",
-        "UpElemento2",
-        "UpElemento1"
+        "upElement19Trigger",
+        "upElement18Trigger",
+        "upElement17Trigger",
+        "upElement13Trigger",
+        "upElement14Trigger",
+        "upElement15Trigger",
+        "upElement16Trigger",
+        "upElement12Trigger",
+        "upElement11Trigger",
+        "upElement10Trigger",
+        "upElement9Trigger",
+        "upElement8Trigger",
+        "upElement4Trigger",
+        "upElement5Trigger",
+        "upElement6Trigger",
+        "upElement7Trigger",
+        "upElement3Trigger",
+        "upElement2Trigger",
+        "upElement1Trigger"
     };
 
-    private void ShowPossibleElements()
-    {
-        int diceNumberTextToInt = int.Parse(diceNumberText.text);
+    List<string> possiblePositions = new() { };
 
+    private List<string> ShowPossibleElements(List<string> possiblePositions, int diceNumberTextToInt)
+    {
         if (currentPossition - diceNumberTextToInt >= 0)
         {
-            // Play animacion de upElementsAnimationNames[currentPossition - diceNumberTextToInt]
+            boardAnimator.SetTrigger(upElementsAnimationNames[currentPossition - diceNumberTextToInt]);
+            possiblePositions.Add(roadElements[currentPossition - diceNumberTextToInt]);
         }
 
         if (currentPossition + diceNumberTextToInt < roadElements.Count)
         {
-            // Play animacion de upElementsAnimationNames[currentPossition + diceNumberTextToInt]
+            boardAnimator.SetTrigger(upElementsAnimationNames[currentPossition + diceNumberTextToInt]);
+            possiblePositions.Add(roadElements[currentPossition + diceNumberTextToInt]);
         }
 
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (roadElements.Contains(hit.transform.name))
-                {
-                    // Mover personaje.
-                    // Actualizar currentPossition.
-                }
-            }
-        }
+        return possiblePositions;
     }
 
     void Update()
     {
         diceNumberText = diceNumber.GetComponent<TMP_Text>();
         diceNumberText.enabled = false;
+        int diceNumberTextToInt = 0;
 
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
@@ -111,7 +102,7 @@ public class TouchDice : DefaultObserverEventHandler
                 {
                     System.Random random = new();
 
-                    // Genera un número aleatorio entre 0 y 5
+                    // Genera un numero aleatorio entre 0 y 5
                     int randomNumber = random.Next(0, diceAnimations.Count);
 
                     diceAnimator.Play(diceAnimations[randomNumber]);
@@ -119,8 +110,27 @@ public class TouchDice : DefaultObserverEventHandler
                     finalRandomNumber = randomNumber + 1;
                     diceNumberText.text = finalRandomNumber.ToString();
 
-                    // Bloquear dado
-                    // ShowPossibleElements()
+                    // TODO: Bloquear dado cuando se termine la animacion del movimiento del propio dado.
+
+                    diceNumberTextToInt = int.Parse(diceNumberText.text);
+                    possiblePositions = ShowPossibleElements(possiblePositions, diceNumberTextToInt);
+                }
+
+                if (possiblePositions.Contains(hit.transform.name))
+                {
+                    // TODO: Mover personaje.                    
+                    // Parar animaciones de elementos que se levantan
+                    foreach(var position in possiblePositions)
+                    {
+                        int index = roadElements.IndexOf(position);
+                        string triggerName = upElementsAnimationNames[index];
+                        string stopTrigger = triggerName + "Stop";
+                        boardAnimator.SetTrigger(stopTrigger);
+                    }
+                    
+                    // Actualizar currentPossition.
+                    currentPossition = roadElements.IndexOf(hit.transform.name);
+                    possiblePositions = new() { };
                 }
             }
         }
