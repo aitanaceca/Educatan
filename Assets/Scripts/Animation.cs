@@ -10,22 +10,25 @@ using Scripts.Levels;
 using System.Reflection;
 using Vuforia;
 
-public class Animation : DefaultObserverEventHandler
+namespace Scripts.Animation
 {
-    public Animator animator;
-
-    public GameObject dice;
-
-    protected override void OnTrackingFound()
+    public class Animation : DefaultObserverEventHandler
     {
-        animator.Play("board");
-    }
+        public Animator animator;
 
-    void Update()
-    {
-       if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime * animator.GetCurrentAnimatorStateInfo(0).length >= 9.5)
-       {
-            dice.SetActive(true);
-       }
+        public GameObject dice;
+
+        protected override void OnTrackingFound()
+        {
+            animator.Play("board");
+        }
+
+        void Update()
+        {
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime * animator.GetCurrentAnimatorStateInfo(0).length >= 9.5)
+            {
+                dice.SetActive(true);
+            }
+        }
     }
 }
