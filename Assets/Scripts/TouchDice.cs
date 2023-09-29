@@ -120,7 +120,20 @@ namespace Scripts.TouchDice
 
                     if (possiblePositions.Contains(hit.transform.name))
                     {
-                        // TODO: Mover personaje.                    
+                        // TODO: Mover personaje.
+                        //float moveAmount = 2.0f * Time.deltaTime;
+                        //Transform myTransform = mainCharacterTransform;
+
+                        //// Mueve el GameObject en el eje Z
+                        //myTransform.Translate(Vector3.forward * moveAmount);
+                        //myTransform.Translate(Vector3.back * moveAmount);
+                        //// Mueve el GameObject en el eje X 
+                        //myTransform.Translate(Vector3.right * moveAmount);
+                        //myTransform.Translate(Vector3.left * moveAmount);
+                        //// Mueve el GameObject en el eje Y
+                        //myTransform.Translate(Vector3.up * moveAmount);
+                        //myTransform.Translate(Vector3.down * moveAmount);
+
                         // Parar animaciones de elementos que se levantan
                         foreach (var position in possiblePositions)
                         {

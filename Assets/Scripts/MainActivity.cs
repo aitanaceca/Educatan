@@ -46,9 +46,12 @@ namespace Scripts.MainActivity
         public ProBuilderMesh element18;
         public ProBuilderMesh element19;
 
+        public GameObject mainCharacter;
+
         private void Start()
         {
             dice.SetActive(false);
+            mainCharacter.SetActive(false);
             diceNumberText = diceNumber.GetComponent<TMP_Text>();
             diceNumberText.enabled = false;
 
@@ -110,6 +113,11 @@ namespace Scripts.MainActivity
                         break;
                 }
             }
+        }
+
+        public void MoveMainCharacter(int currentPosition)
+        {
+            //Vector3 mainCurrentPosition = mainCharacter.possition;
         }
     }
 }
