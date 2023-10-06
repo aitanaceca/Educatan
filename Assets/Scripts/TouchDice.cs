@@ -14,6 +14,8 @@ namespace Scripts.TouchDice
         public Animator diceAnimator;
         public Animator boardAnimator;
 
+        public Transform mainCharacterTransform;
+
         private TMP_Text diceNumberText;
 
         private List<string> diceFaces = new() { "Cara1", "Cara2", "Cara3", "Cara4", "Cara5", "Cara6" };

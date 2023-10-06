@@ -9,10 +9,11 @@ using Scripts.LevelElements;
 using Scripts.Levels;
 using System.Reflection;
 using Vuforia;
+using System.Threading;
 
 namespace Scripts.Animation
 {
-    public class Animation : DefaultObserverEventHandler
+    public class MainAnimation : DefaultObserverEventHandler
     {
         public Animator animator;
         public Animator characterAnimator;
@@ -25,25 +26,24 @@ namespace Scripts.Animation
 
         private void MoveCharacter()
         {
-            mainCharacter.SetActive(true);
-            characterAnimator.SetTrigger("Walk");
             Transform myTransform = mainCharacterTransform;
-            print(myTransform.position.x);
-            print(myTransform.position.y);
-            print(myTransform.position.z);
-            while (myTransform.position.x < (myTransform.position.x + 0.6f))
-            {
-                float newX = myTransform.position.x + 0.02f;
-                Vector3 moveRightPosition = new Vector3(newX, myTransform.position.y, myTransform.position.z);
-                myTransform.position = moveRightPosition;
-            }
-            float newY = myTransform.position.y + 0.05f;
+
+            float newX = myTransform.position.x + 0.8f;
+            Vector3 moveRightPosition = new Vector3(newX, myTransform.position.y, myTransform.position.z);
+            myTransform.position = moveRightPosition;
+
+            float newY = myTransform.position.y + 0.07f;
             Vector3 moveUpPosition = new Vector3(myTransform.position.x, newY, myTransform.position.z);
             myTransform.position = moveUpPosition;
-            print(myTransform.position.x);
-            print(myTransform.position.y);
-            print(myTransform.position.z);
-            characterAnimator.SetTrigger("StopWalk");
+
+            Vector3 currentRotation = myTransform.eulerAngles;
+            currentRotation.y += 90;
+            myTransform.eulerAngles = currentRotation;
+        }
+
+        private void ShowCharacter()
+        {
+            mainCharacter.SetActive(true);
         }
 
         private void ShowDice()
@@ -62,6 +62,7 @@ namespace Scripts.Animation
             {
                 if (!characterMoved)
                 {
+                    ShowCharacter();
                     MoveCharacter();
                     characterMoved = true;
                 }

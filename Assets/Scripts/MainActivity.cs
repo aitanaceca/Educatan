@@ -114,10 +114,5 @@ namespace Scripts.MainActivity
                 }
             }
         }
-
-        public void MoveMainCharacter(int currentPosition)
-        {
-            //Vector3 mainCurrentPosition = mainCharacter.possition;
-        }
     }
 }
