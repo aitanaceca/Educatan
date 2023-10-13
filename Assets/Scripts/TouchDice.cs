@@ -11,6 +11,7 @@ namespace Scripts.TouchDice
     {
         public GameObject diceNumber;
         public GameObject character;
+        public GameObject dice;
 
         public Animator diceAnimator;
         public Animator boardAnimator;
@@ -98,6 +99,30 @@ namespace Scripts.TouchDice
             return new Vector3(newX, characterHeight, newZ);
         }
 
+
+        private void BlockDice()
+        {
+            Transform[] diceFacesGameObjects = dice.GetComponentsInChildren<Transform>();
+
+            foreach (Transform diceFace in diceFacesGameObjects)
+            {
+                Collider collider = diceFace.GetComponent<Collider>();
+                collider.enabled = false;
+            }
+        }
+
+
+        private void EnableDice()
+        {
+            Transform[] diceFacesGameObjects = dice.GetComponentsInChildren<Transform>();
+
+            foreach (Transform diceFace in diceFacesGameObjects)
+            {
+                Collider collider = diceFace.GetComponent<Collider>();
+                collider.enabled = true;
+            }
+        }
+
         void Update()
         {
             diceNumberText = diceNumber.GetComponent<TMP_Text>();
@@ -123,7 +148,7 @@ namespace Scripts.TouchDice
                         finalRandomNumber = randomNumber + 1;
                         diceNumberText.text = finalRandomNumber.ToString();
 
-                        // TODO: Bloquear dado cuando se termine la animacion del movimiento del propio dado.
+                        BlockDice();
 
                         diceNumberTextToInt = int.Parse(diceNumberText.text);
                         possiblePositions = ShowPossibleElements(possiblePositions, diceNumberTextToInt);
@@ -153,6 +178,7 @@ namespace Scripts.TouchDice
                         // Actualizar currentPossition.
                         currentPossition = roadElements.IndexOf(hit.transform.name);
                         possiblePositions = new() { };
+                        EnableDice();
                     }
                 }
             }
