@@ -5267,8 +5267,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   diceNumber: {fileID: 1306368568}
+  character: {fileID: 1506702289}
   diceAnimator: {fileID: 1665344504}
   boardAnimator: {fileID: 831360723}
+  characterAnimator: {fileID: 1832164330}
   mainCharacterTransform: {fileID: 1832164329}
 --- !u!114 &937432847
 MonoBehaviour:

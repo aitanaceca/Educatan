@@ -29,12 +29,9 @@ namespace Scripts.Animation
             Transform myTransform = mainCharacterTransform;
 
             float newX = myTransform.position.x + 0.8f;
-            Vector3 moveRightPosition = new Vector3(newX, myTransform.position.y, myTransform.position.z);
-            myTransform.position = moveRightPosition;
-
-            float newY = myTransform.position.y + 0.07f;
-            Vector3 moveUpPosition = new Vector3(myTransform.position.x, newY, myTransform.position.z);
-            myTransform.position = moveUpPosition;
+            float newY = myTransform.position.y + 0.075f;
+            Vector3 moveStartPosition = new Vector3(newX, newY, myTransform.position.z);
+            myTransform.position = moveStartPosition;
 
             Vector3 currentRotation = myTransform.eulerAngles;
             currentRotation.y += 90;

@@ -10,9 +10,11 @@ namespace Scripts.TouchDice
     public class TouchDice : DefaultObserverEventHandler
     {
         public GameObject diceNumber;
+        public GameObject character;
 
         public Animator diceAnimator;
         public Animator boardAnimator;
+        public Animator characterAnimator;
 
         public Transform mainCharacterTransform;
 
@@ -70,7 +72,7 @@ namespace Scripts.TouchDice
             "upElement1Trigger"
         };
 
-        List<string> possiblePositions = new() { };
+        private List<string> possiblePositions = new() { };
 
         private List<string> ShowPossibleElements(List<string> possiblePositions, int diceNumberTextToInt)
         {
@@ -87,6 +89,13 @@ namespace Scripts.TouchDice
             }
 
             return possiblePositions;
+        }
+
+        Vector3 MoveCharacter(Transform elementTransform, float characterHeight)
+        {
+            float newX = elementTransform.position.x + 0.3f;
+            float newZ = elementTransform.position.z - 0.2f;
+            return new Vector3(newX, characterHeight, newZ);
         }
 
         void Update()
@@ -122,20 +131,6 @@ namespace Scripts.TouchDice
 
                     if (possiblePositions.Contains(hit.transform.name))
                     {
-                        // TODO: Mover personaje.
-                        //float moveAmount = 2.0f * Time.deltaTime;
-                        //Transform myTransform = mainCharacterTransform;
-
-                        //// Mueve el GameObject en el eje Z
-                        //myTransform.Translate(Vector3.forward * moveAmount);
-                        //myTransform.Translate(Vector3.back * moveAmount);
-                        //// Mueve el GameObject en el eje X 
-                        //myTransform.Translate(Vector3.right * moveAmount);
-                        //myTransform.Translate(Vector3.left * moveAmount);
-                        //// Mueve el GameObject en el eje Y
-                        //myTransform.Translate(Vector3.up * moveAmount);
-                        //myTransform.Translate(Vector3.down * moveAmount);
-
                         // Parar animaciones de elementos que se levantan
                         foreach (var position in possiblePositions)
                         {
@@ -144,6 +139,16 @@ namespace Scripts.TouchDice
                             string stopTrigger = triggerName + "Stop";
                             boardAnimator.SetTrigger(stopTrigger);
                         }
+
+                        // TODO: Arreglar que el muñeco se mueva cuando se baje la pieza.
+                        
+                        // Movimiento del personaje.
+                        Transform characterTransform = mainCharacterTransform;
+
+                        character.SetActive(false);
+                        Vector3 newPosition = MoveCharacter(hit.transform, characterTransform.position.y);
+                        characterTransform.position = newPosition;
+                        character.SetActive(true);
 
                         // Actualizar currentPossition.
                         currentPossition = roadElements.IndexOf(hit.transform.name);
