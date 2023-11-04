@@ -17,6 +17,7 @@ namespace Scripts.MainActivity
     {
         public GameObject dice;
         public GameObject diceNumber;
+        public GameObject card;
 
         private TMP_Text diceNumberText;
 
@@ -52,6 +53,7 @@ namespace Scripts.MainActivity
         {
             dice.SetActive(false);
             mainCharacter.SetActive(false);
+            card.SetActive(false);
             diceNumberText = diceNumber.GetComponent<TMP_Text>();
             diceNumberText.enabled = false;
 
@@ -88,27 +90,27 @@ namespace Scripts.MainActivity
                 switch (randomElement)
                 {
                     case "WaterMaterial":
-                        elem.GetComponent<MeshRenderer>().sharedMaterial = waterMaterial;
+                        elem.GetComponent<MeshRenderer>().material = waterMaterial;
                         levelElements.WaterMaterial -= 1;
                         break;
 
                     case "SandMaterial":
-                        elem.GetComponent<MeshRenderer>().sharedMaterial = sandMaterial;
+                        elem.GetComponent<MeshRenderer>().material = sandMaterial;
                         levelElements.SandMaterial -= 1;
                         break;
 
                     case "FireMaterial":
-                        elem.GetComponent<MeshRenderer>().sharedMaterial = fireMaterial;
+                        elem.GetComponent<MeshRenderer>().material = fireMaterial;
                         levelElements.FireMaterial -= 1;
                         break;
 
                     case "GrassMaterial":
-                        elem.GetComponent<MeshRenderer>().sharedMaterial = grassMaterial;
+                        elem.GetComponent<MeshRenderer>().material = grassMaterial;
                         levelElements.GrassMaterial -= 1;
                         break;
 
                     case "WoodMaterial":
-                        elem.GetComponent<MeshRenderer>().sharedMaterial = woodMaterial;
+                        elem.GetComponent<MeshRenderer>().material = woodMaterial;
                         levelElements.WoodMaterial -= 1;
                         break;
                 }
