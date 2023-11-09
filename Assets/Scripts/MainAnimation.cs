@@ -24,20 +24,6 @@ namespace Scripts.Animation
 
         private bool characterMoved = false;
 
-        private void MoveCharacter()
-        {
-            Transform myTransform = mainCharacterTransform;
-
-            float newX = myTransform.position.x + 0.8f;
-            float newY = myTransform.position.y + 0.075f;
-            Vector3 moveStartPosition = new Vector3(newX, newY, myTransform.position.z);
-            myTransform.position = moveStartPosition;
-
-            Vector3 currentRotation = myTransform.eulerAngles;
-            currentRotation.y += 90;
-            myTransform.eulerAngles = currentRotation;
-        }
-
         private void ShowCharacter()
         {
             mainCharacter.SetActive(true);
@@ -60,7 +46,6 @@ namespace Scripts.Animation
                 if (!characterMoved)
                 {
                     ShowCharacter();
-                    MoveCharacter();
                     characterMoved = true;
                 }
                 ShowDice();

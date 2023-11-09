@@ -26,7 +26,7 @@ namespace Scripts.TouchDice
 
         private int finalRandomNumber;
 
-        private int currentPossition = 0;
+        private int currentPosition = 0;
         private List<string> roadElements = new()
         {
             "Elemento19",
@@ -77,28 +77,26 @@ namespace Scripts.TouchDice
 
         private List<string> ShowPossibleElements(List<string> possiblePositions, int diceNumberTextToInt)
         {
-            if (currentPossition - diceNumberTextToInt >= 0)
+            if (currentPosition - diceNumberTextToInt >= 0)
             {
-                boardAnimator.SetTrigger(upElementsAnimationNames[currentPossition - diceNumberTextToInt]);
-                possiblePositions.Add(roadElements[currentPossition - diceNumberTextToInt]);
+                boardAnimator.SetTrigger(upElementsAnimationNames[currentPosition - diceNumberTextToInt]);
+                possiblePositions.Add(roadElements[currentPosition - diceNumberTextToInt]);
             }
 
-            if (currentPossition + diceNumberTextToInt < roadElements.Count)
+            if (currentPosition + diceNumberTextToInt < roadElements.Count)
             {
-                boardAnimator.SetTrigger(upElementsAnimationNames[currentPossition + diceNumberTextToInt]);
-                possiblePositions.Add(roadElements[currentPossition + diceNumberTextToInt]);
+                boardAnimator.SetTrigger(upElementsAnimationNames[currentPosition + diceNumberTextToInt]);
+                possiblePositions.Add(roadElements[currentPosition + diceNumberTextToInt]);
             }
 
             return possiblePositions;
         }
 
-        Vector3 MoveCharacter(Transform elementTransform, float characterHeight)
+        private void MoveCharacter(Transform elementTransform, Transform characterTransform)
         {
-            float newX = elementTransform.position.x + 0.3f;
-            float newZ = elementTransform.position.z - 0.2f;
-            return new Vector3(newX, characterHeight, newZ);
+            Vector3 elementPosition = elementTransform.GetComponent<Renderer>().bounds.center;
+            characterTransform.position = elementPosition;
         }
-
 
         private void BlockDice()
         {
@@ -165,18 +163,17 @@ namespace Scripts.TouchDice
                             boardAnimator.SetTrigger(stopTrigger);
                         }
 
-                        // TODO: Arreglar que el muñeco se mueva cuando se baje la pieza.
+                        // TODO: Arreglar que el muÃ±eco se mueva cuando se baje la pieza.
                         
                         // Movimiento del personaje.
                         Transform characterTransform = mainCharacterTransform;
 
                         character.SetActive(false);
-                        Vector3 newPosition = MoveCharacter(hit.transform, characterTransform.position.y);
-                        characterTransform.position = newPosition;
+                        MoveCharacter(hit.transform, characterTransform);
                         character.SetActive(true);
 
                         // Actualizar currentPossition.
-                        currentPossition = roadElements.IndexOf(hit.transform.name);
+                        currentPosition = roadElements.IndexOf(hit.transform.name);
                         possiblePositions = new() { };
                         EnableDice();
                     }
