@@ -12,6 +12,9 @@ namespace Scripts.TouchDice
         public GameObject diceNumber;
         public GameObject character;
         public GameObject dice;
+        public GameObject card;
+
+        public Button cardButton;
 
         public Animator diceAnimator;
         public Animator boardAnimator;
@@ -75,6 +78,8 @@ namespace Scripts.TouchDice
 
         private List<string> possiblePositions = new() { };
 
+        private int nextCard = 0;
+
         private List<string> ShowPossibleElements(List<string> possiblePositions, int diceNumberTextToInt)
         {
             if (currentPosition - diceNumberTextToInt >= 0)
@@ -119,6 +124,16 @@ namespace Scripts.TouchDice
                 Collider collider = diceFace.GetComponent<Collider>();
                 collider.enabled = true;
             }
+        }
+
+        private void ShowCard()
+        {
+            card.SetActive(true);
+        }
+
+        private void HideCard()
+        {
+            card.SetActive(false);
         }
 
         void Update()
@@ -171,6 +186,17 @@ namespace Scripts.TouchDice
                         character.SetActive(false);
                         MoveCharacter(hit.transform, characterTransform);
                         character.SetActive(true);
+
+                        nextCard += 1;
+                        if (nextCard == 4)
+                        {
+                            ShowCard();
+                            cardButton.onClick.AddListener(HideCard);
+
+                            // TODO: Bloquear dado hasta que se pulse Aceptar en la carta.
+
+                            nextCard = 0;
+                        }
 
                         // Actualizar currentPossition.
                         currentPosition = roadElements.IndexOf(hit.transform.name);
