@@ -5508,6 +5508,8 @@ MonoBehaviour:
   diceNumber: {fileID: 1306368568}
   character: {fileID: 1506702289}
   dice: {fileID: 1665344496}
+  card: {fileID: 645619570}
+  cardButton: {fileID: 1235875417}
   diceAnimator: {fileID: 1665344504}
   boardAnimator: {fileID: 831360723}
   characterAnimator: {fileID: 1832164330}
