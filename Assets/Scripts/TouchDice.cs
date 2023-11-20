@@ -100,6 +100,7 @@ namespace Scripts.TouchDice
         private void MoveCharacter(Transform elementTransform, Transform characterTransform)
         {
             Vector3 elementPosition = elementTransform.GetComponent<Renderer>().bounds.center;
+            elementPosition.y += 0.002f;
             characterTransform.position = elementPosition;
         }
 
