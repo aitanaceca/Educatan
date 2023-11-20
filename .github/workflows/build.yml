@@ -8,22 +8,6 @@ on:
       - master
 
 jobs:
-  sonarcloud:
-      name: SonarCloud Scanner
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
-          with:
-            fetch-depth: 0 
-
-        - name: Copy sonar-scanner.properties
-          run: cp .github/workflows/sonar-project.properties ./
-
-        - name: SonarCloud Scan
-          uses: SonarSource/sonarcloud-github-action@master
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   build:
     name: Build Application
     runs-on: ubuntu-latest
