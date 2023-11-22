@@ -18,8 +18,12 @@ namespace Scripts.MainActivity
         public GameObject dice;
         public GameObject diceNumber;
         public GameObject card;
+        public GameObject mainCharacter;
+        public GameObject bagCanvas;
 
         private TMP_Text diceNumberText;
+
+        public TMP_Text level;
 
         public Material waterMaterial;
         public Material sandMaterial;
@@ -47,8 +51,6 @@ namespace Scripts.MainActivity
         public ProBuilderMesh element18;
         public ProBuilderMesh element19;
 
-        public GameObject mainCharacter;
-
         private void Start()
         {
             dice.SetActive(false);
@@ -56,8 +58,10 @@ namespace Scripts.MainActivity
             card.SetActive(false);
             diceNumberText = diceNumber.GetComponent<TMP_Text>();
             diceNumberText.enabled = false;
+            bagCanvas.SetActive(false);
 
-            int currentLevel = 2;
+            int currentLevel = int.Parse(level.text);
+
             List<ProBuilderMesh> elements = new()
             {
                 element1,
