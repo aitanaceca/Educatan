@@ -6184,11 +6184,17 @@ MonoBehaviour:
   character: {fileID: 1506702289}
   dice: {fileID: 1665344496}
   card: {fileID: 645619570}
+  bagCanvas: {fileID: 611078411}
   cardButton: {fileID: 1235875417}
   diceAnimator: {fileID: 1665344504}
   boardAnimator: {fileID: 831360723}
   characterAnimator: {fileID: 1832164330}
   mainCharacterTransform: {fileID: 1832164329}
+  fireCounter: {fileID: 1124106999}
+  waterCounter: {fileID: 678617961}
+  grassCounter: {fileID: 526458651}
+  sandCounter: {fileID: 1831600570}
+  woodCounter: {fileID: 1547101683}
 --- !u!114 &937432847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7463,7 +7469,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00018310547, y: -18.419434}
+  m_AnchoredPosition: {x: 0.00024414062, y: -18.419434}
   m_SizeDelta: {x: -0.00061035, y: -1250.2844}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1049735757
