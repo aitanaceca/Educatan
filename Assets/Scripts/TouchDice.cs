@@ -210,6 +210,26 @@ namespace Scripts.TouchDice
             }
         }
 
+        private void OpenOrCloseBag()
+        {
+            if(bagIsClosed)
+            {
+                bagClosed.SetActive(false);
+                bagOpen.SetActive(true);
+                counterCanvas.SetActive(true);
+                bagButtonText.text = "PULSA PARA CERRAR";
+                bagIsClosed = false;
+            } 
+            else
+            {
+                bagOpen.SetActive(false);
+                bagClosed.SetActive(true);
+                counterCanvas.SetActive(false);
+                bagButtonText.text = "PULSA PARA ABRIR";
+                bagIsClosed = true;
+            }
+        }
+
         void Update()
         {
             bagButton.onClick.AddListener(OpenOrCloseBag);
