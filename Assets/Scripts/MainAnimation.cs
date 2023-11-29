@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.ProBuilder;
 using UnityEngine.ProBuilder.MeshOperations;
 using System;
-using Scripts.LevelElements;
 using Scripts.Levels;
 using System.Reflection;
 using Vuforia;
@@ -25,24 +24,7 @@ namespace Scripts.Animation
 
         public Transform mainCharacterTransform;
 
-        public TMP_Text fireCounter;
-        public TMP_Text waterCounter;
-        public TMP_Text grassCounter;
-        public TMP_Text sandCounter;
-        public TMP_Text woodCounter;
-        public TMP_Text currentLevel;
-
         private bool characterMoved = false;
-
-        private void SetInitialCounters()
-        {
-            LevelElements.LevelElements levelElements = new(int.Parse(currentLevel.text));
-            fireCounter.text = $"0 / {(levelElements.FireMaterial).ToString()}";
-            waterCounter.text = $"0 / {(levelElements.WaterMaterial).ToString()}";
-            grassCounter.text = $"0 / {(levelElements.GrassMaterial).ToString()}";
-            sandCounter.text = $"0 / {(levelElements.SandMaterial).ToString()}";
-            woodCounter.text = $"0 / {(levelElements.WoodMaterial).ToString()}";
-        }
 
         private void ShowBagCanvas()
         {
@@ -68,7 +50,6 @@ namespace Scripts.Animation
         {
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime * animator.GetCurrentAnimatorStateInfo(0).length >= 9.5)
             {
-                SetInitialCounters();
                 ShowBagCanvas();
                 if (!characterMoved)
                 {

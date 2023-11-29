@@ -4168,8 +4168,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1856083648}
   - {fileID: 1221035275}
+  - {fileID: 1856083648}
   - {fileID: 1194622295}
   - {fileID: 89332415}
   m_Father: {fileID: 831360718}
@@ -6194,6 +6194,7 @@ MonoBehaviour:
   mainCharacter: {fileID: 1506702289}
   bagCanvas: {fileID: 611078411}
   counterCanvas: {fileID: 1237876191}
+  bagOpen: {fileID: 1221035274}
   level: {fileID: 89332416}
   waterMaterial: {fileID: 2100000, guid: 142e6aede49221246b381a64635e0b2e, type: 2}
   sandMaterial: {fileID: 2100000, guid: 7513570530a8fce46ab9c9d8213735c9, type: 2}
@@ -6219,6 +6220,12 @@ MonoBehaviour:
   element17: {fileID: 1160659598}
   element18: {fileID: 531303602}
   element19: {fileID: 1404627622}
+  fireCounter: {fileID: 108487728}
+  waterCounter: {fileID: 554223419}
+  grassCounter: {fileID: 1917411169}
+  sandCounter: {fileID: 1804892572}
+  woodCounter: {fileID: 562607775}
+  currentLevel: {fileID: 89332416}
 --- !u!95 &831360723
 Animator:
   serializedVersion: 5
@@ -6397,15 +6404,7 @@ MonoBehaviour:
   dice: {fileID: 1665344496}
   mainCharacter: {fileID: 1506702289}
   bagCanvas: {fileID: 611078411}
-  counterCanvas: {fileID: 1237876191}
-  bagOpen: {fileID: 1221035274}
   mainCharacterTransform: {fileID: 1832164329}
-  fireCounter: {fileID: 108487728}
-  waterCounter: {fileID: 554223419}
-  grassCounter: {fileID: 1917411169}
-  sandCounter: {fileID: 1804892572}
-  woodCounter: {fileID: 562607775}
-  currentLevel: {fileID: 89332416}
 --- !u!114 &937432846
 MonoBehaviour:
   m_ObjectHideFlags: 0
