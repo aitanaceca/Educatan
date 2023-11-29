@@ -20,6 +20,7 @@ namespace Scripts.MainActivity
         public GameObject card;
         public GameObject mainCharacter;
         public GameObject bagCanvas;
+        public GameObject counterCanvas;
 
         private TMP_Text diceNumberText;
 
@@ -59,6 +60,7 @@ namespace Scripts.MainActivity
             diceNumberText = diceNumber.GetComponent<TMP_Text>();
             diceNumberText.enabled = false;
             bagCanvas.SetActive(false);
+            counterCanvas.SetActive(false);
 
             int currentLevel = int.Parse(level.text);
 

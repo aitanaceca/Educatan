@@ -13,8 +13,12 @@ namespace Scripts.TouchDice
         public GameObject character;
         public GameObject dice;
         public GameObject card;
+        public GameObject counterCanvas;
+        public GameObject bagOpen;
+        public GameObject bagClosed;
 
         public Button cardButton;
+        public Button bagButton;
 
         public Animator diceAnimator;
         public Animator boardAnimator;
@@ -27,6 +31,8 @@ namespace Scripts.TouchDice
         public TMP_Text grassCounter;
         public TMP_Text sandCounter;
         public TMP_Text woodCounter;
+
+        public TMP_Text bagButtonText;
 
         private TMP_Text diceNumberText;
 
@@ -85,6 +91,7 @@ namespace Scripts.TouchDice
         private List<string> possiblePositions = new() { };
 
         private int nextCard = 0;
+        private bool bagIsClosed = true;
 
         private List<string> ShowPossibleElements(List<string> possiblePositions, int diceNumberTextToInt)
         {
@@ -181,8 +188,29 @@ namespace Scripts.TouchDice
             }
         }
 
+        private void OpenOrCloseBag()
+        {
+            if(bagIsClosed)
+            {
+                bagClosed.SetActive(false);
+                bagOpen.SetActive(true);
+                counterCanvas.SetActive(true);
+                bagButtonText.text = "PULSA PARA CERRAR";
+                bagIsClosed = false;
+            } 
+            else
+            {
+                bagOpen.SetActive(false);
+                bagClosed.SetActive(true);
+                counterCanvas.SetActive(false);
+                bagButtonText.text = "PULSA PARA ABRIR";
+                bagIsClosed = true;
+            }
+        }
+
         void Update()
         {
+            bagButton.onClick.AddListener(OpenOrCloseBag);
             diceNumberText = diceNumber.GetComponent<TMP_Text>();
             diceNumberText.enabled = false;
             int diceNumberTextToInt = 0;
