@@ -22,6 +22,12 @@ namespace Scripts.TouchDice
 
         public Transform mainCharacterTransform;
 
+        public TMP_Text fireCounter;
+        public TMP_Text waterCounter;
+        public TMP_Text grassCounter;
+        public TMP_Text sandCounter;
+        public TMP_Text woodCounter;
+
         private TMP_Text diceNumberText;
 
         private List<string> diceFaces = new() { "Cara1", "Cara2", "Cara3", "Cara4", "Cara5", "Cara6" };
@@ -115,7 +121,6 @@ namespace Scripts.TouchDice
             }
         }
 
-
         private void EnableDice()
         {
             Transform[] diceFacesGameObjects = dice.GetComponentsInChildren<Transform>();
@@ -135,6 +140,45 @@ namespace Scripts.TouchDice
         private void HideCard()
         {
             card.SetActive(false);
+        }
+
+        private string GetNewCounterValue(string elementText)
+        {
+            string[] counterElements = elementText.Split(" ");
+            int updatedCounter = int.Parse(counterElements[0]) + 1;
+            return $"{updatedCounter.ToString()} / {counterElements[2]}";
+        }
+
+        private void UpdateElementCounter(string elementName)
+        {
+            GameObject element = GameObject.Find(elementName);
+            string materialName = element.GetComponent<MeshRenderer>().material.name;
+            
+            if (materialName.Contains("fuego"))
+            {
+                string newText = GetNewCounterValue(fireCounter.text);
+                fireCounter.text = newText;
+            } 
+            if (materialName.Contains("agua"))
+            {
+                string newText = GetNewCounterValue(waterCounter.text);
+                waterCounter.text = newText;
+            } 
+            if (materialName.Contains("hierba"))
+            {
+                string newText = GetNewCounterValue(grassCounter.text);
+                grassCounter.text = newText;
+            }
+            if (materialName.Contains("arena"))
+            {
+                string newText = GetNewCounterValue(sandCounter.text);
+                sandCounter.text = newText;
+            }
+            if (materialName.Contains("madera"))
+            {
+                string newText = GetNewCounterValue(woodCounter.text);
+                woodCounter.text = newText;
+            }
         }
 
         void Update()
@@ -169,7 +213,7 @@ namespace Scripts.TouchDice
                     }
 
                     if (possiblePositions.Contains(hit.transform.name))
-                    {
+                    {                                         
                         // Parar animaciones de elementos que se levantan
                         foreach (var position in possiblePositions)
                         {
@@ -187,6 +231,8 @@ namespace Scripts.TouchDice
                         character.SetActive(false);
                         MoveCharacter(hit.transform, characterTransform);
                         character.SetActive(true);
+
+                        UpdateElementCounter(hit.transform.name);
 
                         nextCard += 1;
                         if (nextCard == 4)
