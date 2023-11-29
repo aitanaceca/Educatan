@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using Scripts.CounterText;
 
 namespace Scripts.TouchDice
 {
@@ -156,7 +157,7 @@ namespace Scripts.TouchDice
             return $"{updatedCounter.ToString()} / {counterElements[2]}";
         }
 
-        private void UpdateElementCounter(string elementName)
+        private CounterText.CounterText UpdateElementCounter(string elementName)
         {
             GameObject element = GameObject.Find(elementName);
             string materialName = element.GetComponent<MeshRenderer>().material.name;
@@ -164,28 +165,29 @@ namespace Scripts.TouchDice
             if (materialName.Contains("fuego"))
             {
                 string newText = GetNewCounterValue(fireCounter.text);
-                fireCounter.text = newText;
+                return new(waterCounter.text, sandCounter.text, newText, grassCounter.text, woodCounter.text);
             } 
             if (materialName.Contains("agua"))
             {
                 string newText = GetNewCounterValue(waterCounter.text);
-                waterCounter.text = newText;
+                return new(newText, sandCounter.text, fireCounter.text, grassCounter.text, woodCounter.text);
             } 
             if (materialName.Contains("hierba"))
             {
                 string newText = GetNewCounterValue(grassCounter.text);
-                grassCounter.text = newText;
+                return new(waterCounter.text, sandCounter.text, fireCounter.text, newText, woodCounter.text);
             }
             if (materialName.Contains("arena"))
             {
                 string newText = GetNewCounterValue(sandCounter.text);
-                sandCounter.text = newText;
+                return new(waterCounter.text, newText, fireCounter.text, grassCounter.text, woodCounter.text);
             }
             if (materialName.Contains("madera"))
             {
                 string newText = GetNewCounterValue(woodCounter.text);
-                woodCounter.text = newText;
+                return new(waterCounter.text, sandCounter.text, fireCounter.text, grassCounter.text, newText);
             }
+            return new(waterCounter.text, sandCounter.text, fireCounter.text, grassCounter.text, woodCounter.text);
         }
 
         private void OpenOrCloseBag()
@@ -260,7 +262,12 @@ namespace Scripts.TouchDice
                         MoveCharacter(hit.transform, characterTransform);
                         character.SetActive(true);
 
-                        UpdateElementCounter(hit.transform.name);
+                        CounterText.CounterText updateCounter = UpdateElementCounter(hit.transform.name);
+                        fireCounter.text = updateCounter.FireCounter;
+                        waterCounter.text = updateCounter.WaterCounter;
+                        grassCounter.text = updateCounter.GrassCounter;
+                        sandCounter.text = updateCounter.SandCounter;
+                        woodCounter.text = updateCounter.WoodCounter;
 
                         nextCard += 1;
                         if (nextCard == 4)

@@ -21,6 +21,7 @@ namespace Scripts.MainActivity
         public GameObject mainCharacter;
         public GameObject bagCanvas;
         public GameObject counterCanvas;
+        public GameObject bagOpen;
 
         private TMP_Text diceNumberText;
 
@@ -52,6 +53,23 @@ namespace Scripts.MainActivity
         public ProBuilderMesh element18;
         public ProBuilderMesh element19;
 
+        public TMP_Text fireCounter;
+        public TMP_Text waterCounter;
+        public TMP_Text grassCounter;
+        public TMP_Text sandCounter;
+        public TMP_Text woodCounter;
+        public TMP_Text currentLevel;
+
+        private void SetInitialCounters()
+        {
+            LevelElements.LevelElements levelElements = new(int.Parse(currentLevel.text));
+            fireCounter.text = $"0 / {(levelElements.FireMaterial).ToString()}";
+            waterCounter.text = $"0 / {(levelElements.WaterMaterial).ToString()}";
+            grassCounter.text = $"0 / {(levelElements.GrassMaterial).ToString()}";
+            sandCounter.text = $"0 / {(levelElements.SandMaterial).ToString()}";
+            woodCounter.text = $"0 / {(levelElements.WoodMaterial).ToString()}";
+        }
+
         private void Start()
         {
             dice.SetActive(false);
@@ -61,6 +79,8 @@ namespace Scripts.MainActivity
             diceNumberText.enabled = false;
             bagCanvas.SetActive(false);
             counterCanvas.SetActive(false);
+            bagOpen.SetActive(false);
+            SetInitialCounters();
 
             int currentLevel = int.Parse(level.text);
 
