@@ -21,6 +21,8 @@ namespace Scripts.Animation
         public GameObject dice;
         public GameObject mainCharacter;
         public GameObject bagCanvas;
+        
+        public GameObject board;
 
         public Transform mainCharacterTransform;
 
@@ -41,6 +43,24 @@ namespace Scripts.Animation
             dice.SetActive(true);
         }
 
+        private void ShowBridges()
+        {
+            Transform[] boardTransforms = board.GetComponentsInChildren<Transform>();
+
+            foreach (var elem in boardTransforms)
+            {
+                Transform elemTransform = elem.transform;
+
+                foreach (Transform bridge in elemTransform)
+                {
+                    if (bridge.name.Contains("Puente"))
+                    {
+                        bridge.gameObject.SetActive(true);
+                    }                   
+                }
+            }
+        }
+
         protected override void OnTrackingFound()
         {
             animator.Play("board");
@@ -51,6 +71,7 @@ namespace Scripts.Animation
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime * animator.GetCurrentAnimatorStateInfo(0).length >= 9.5)
             {
                 ShowBagCanvas();
+                ShowBridges();
                 if (!characterMoved)
                 {
                     ShowCharacter();
