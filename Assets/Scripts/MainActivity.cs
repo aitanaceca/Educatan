@@ -70,6 +70,19 @@ namespace Scripts.MainActivity
             woodCounter.text = $"0 / {(levelElements.WoodMaterial).ToString()}";
         }
 
+        private static void HideBridges(List<ProBuilderMesh> elements)
+        {
+            foreach(var elem in elements)
+            {
+                Transform elemTransform = elem.transform;
+
+                foreach (Transform bridge in elemTransform)
+                {
+                    bridge.gameObject.SetActive(false);
+                }
+            }
+        }
+
         private void Start()
         {
             dice.SetActive(false);
@@ -108,6 +121,8 @@ namespace Scripts.MainActivity
             };
 
             LevelElements.LevelElements levelElements = new(currentLevel);
+
+            HideBridges(elements);
 
             foreach (var elem in elements)
             {

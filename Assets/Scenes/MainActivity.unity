@@ -8641,6 +8641,7 @@ MonoBehaviour:
   dice: {fileID: 1665344496}
   mainCharacter: {fileID: 1506702289}
   bagCanvas: {fileID: 611078411}
+  board: {fileID: 831360717}
   mainCharacterTransform: {fileID: 1832164329}
 --- !u!114 &937432846
 MonoBehaviour:
