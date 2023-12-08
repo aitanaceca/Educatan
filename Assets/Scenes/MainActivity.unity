@@ -8700,12 +8700,14 @@ MonoBehaviour:
   boardAnimator: {fileID: 831360723}
   characterAnimator: {fileID: 1832164330}
   mainCharacterTransform: {fileID: 1832164329}
+  firsElementTransform: {fileID: 1404627617}
   fireCounter: {fileID: 108487728}
   waterCounter: {fileID: 554223419}
   grassCounter: {fileID: 1917411169}
   sandCounter: {fileID: 1804892572}
   woodCounter: {fileID: 562607775}
   bagButtonText: {fileID: 325692355}
+  cardText: {fileID: 742100067}
 --- !u!114 &937432847
 MonoBehaviour:
   m_ObjectHideFlags: 0
