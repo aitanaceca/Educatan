@@ -24,8 +24,11 @@ namespace Scripts.MainActivity
         public GameObject checkCardCanvas;
         public GameObject bagOpen;
 
-        private TMP_Text diceNumberText;
-
+        public TMP_Text fireCounter;
+        public TMP_Text waterCounter;
+        public TMP_Text grassCounter;
+        public TMP_Text sandCounter;
+        public TMP_Text woodCounter;
         public TMP_Text level;
 
         public Material waterMaterial;
@@ -54,16 +57,11 @@ namespace Scripts.MainActivity
         public ProBuilderMesh element18;
         public ProBuilderMesh element19;
 
-        public TMP_Text fireCounter;
-        public TMP_Text waterCounter;
-        public TMP_Text grassCounter;
-        public TMP_Text sandCounter;
-        public TMP_Text woodCounter;
-        public TMP_Text currentLevel;
+        private TMP_Text diceNumberText;
 
-        private void SetInitialCounters()
+        private void SetInitialCounters(int currentLevel)
         {
-            LevelElements.LevelElements levelElements = new(int.Parse(currentLevel.text));
+            LevelElements.LevelElements levelElements = new(currentLevel);
             fireCounter.text = $"0 / {(levelElements.FireMaterial).ToString()}";
             waterCounter.text = $"0 / {(levelElements.WaterMaterial).ToString()}";
             grassCounter.text = $"0 / {(levelElements.GrassMaterial).ToString()}";
@@ -95,9 +93,19 @@ namespace Scripts.MainActivity
             checkCardCanvas.SetActive(false);
             counterCanvas.SetActive(false);
             bagOpen.SetActive(false);
-            SetInitialCounters();
 
-            int currentLevel = int.Parse(level.text);
+            int currentLevel;
+
+            if (PlayerPrefs.HasKey("Level"))
+            {
+                currentLevel = int.Parse(PlayerPrefs.GetString("Level"));
+            }
+            else
+            {
+                currentLevel = int.Parse(level.text);
+            }
+
+            SetInitialCounters(currentLevel);
 
             List<ProBuilderMesh> elements = new()
             {
@@ -158,6 +166,11 @@ namespace Scripts.MainActivity
                         break;
                 }
             }
+        }
+
+        private void OnApplicationQuit()
+        {
+            PlayerPrefs.DeleteAll();
         }
     }
 }
