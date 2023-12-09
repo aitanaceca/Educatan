@@ -16,11 +16,13 @@ namespace Scripts.TouchDice
         public GameObject dice;
         public GameObject card;
         public GameObject counterCanvas;
+        public GameObject checkCardCanvas;
         public GameObject bagOpen;
         public GameObject bagClosed;
 
         public Button cardButton;
         public Button bagButton;
+        public Button checkCardButton;
 
         public Animator diceAnimator;
         public Animator boardAnimator;
@@ -342,9 +344,20 @@ namespace Scripts.TouchDice
             }
         }
 
+        private void ShowCheckCardCanvas()
+        {
+            checkCardCanvas.SetActive(true);
+        }
+
+        private void ShowCardOnClickCardButton()
+        {
+            ShowCard(currentCardRestriction.Item1, currentCardRestriction.Item2);
+        }
+
         void Update()
         {
             bagButton.onClick.AddListener(OpenOrCloseBag);
+            checkCardButton.onClick.AddListener(ShowCardOnClickCardButton);
             diceNumberText = diceNumber.GetComponent<TMP_Text>();
             diceNumberText.enabled = false;
             int diceNumberTextToInt = 0;
@@ -409,6 +422,7 @@ namespace Scripts.TouchDice
                             // TODO: Bloquear dado hasta que se pulse Aceptar en la carta.
 
                             nextCard = 0;
+                            ShowCheckCardCanvas();
                         }
 
                         (string, int) elementsForCounter = ApplyCardRestriction(int.Parse(diceNumberText.text), nextCard, hit.transform.name, characterTransform);
