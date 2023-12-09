@@ -192,11 +192,11 @@ namespace Scripts.TouchDice
                         }
                         break;
                     case 1:
-                        if (diceNumber == currentCardRestriction.Item2.Num)
-                        
+                        if (diceNumber == currentCardRestriction.Item2.Num) { 
+
                             return (currentCardRestriction.Item2.Element, 1);
                         }
-                        break;
+                        break;   
                     case 2:
                         if (diceNumber == currentCardRestriction.Item2.Num && !cardIsApplied)
                         {
@@ -233,10 +233,10 @@ namespace Scripts.TouchDice
                             }
                             return (currentCardRestriction.Item2.ChangeElement, 1);
                         }
-                        break;
+                        break;            
                 }
             }
-            
+
             return (elementName, 1);
         }
 
