@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 using TMPro;
 using Scripts.CounterText;
 using Scripts.Card;
+using UnityEngine.SceneManagement;
+using Scripts.Scenes;
 
 namespace Scripts.TouchDice
 {
@@ -36,6 +38,7 @@ namespace Scripts.TouchDice
         public TMP_Text grassCounter;
         public TMP_Text sandCounter;
         public TMP_Text woodCounter;
+        public TMP_Text currentLevel;
 
         public TMP_Text bagButtonText;
 
@@ -181,6 +184,12 @@ namespace Scripts.TouchDice
             cardIsApplied = false;
         }
 
+        private void ShowEndCard()
+        {
+            cardText.text = "ENHORABUENA, HAS COMPLETADO EL NIVEL.";
+            card.SetActive(true);
+        }
+
         private (string, int) ApplyCardRestriction(int diceNumber, int nextCard, string elementName, Transform characterTransform)
         {
             if (currentCardRestriction.Item2 != null)
@@ -194,11 +203,11 @@ namespace Scripts.TouchDice
                         }
                         break;
                     case 1:
-                        if (diceNumber == currentCardRestriction.Item2.Num) { 
+                        if (diceNumber == currentCardRestriction.Item2.Num) {
 
                             return (currentCardRestriction.Item2.Element, 1);
                         }
-                        break;   
+                        break;
                     case 2:
                         if (diceNumber == currentCardRestriction.Item2.Num && !cardIsApplied)
                         {
@@ -235,7 +244,7 @@ namespace Scripts.TouchDice
                             }
                             return (currentCardRestriction.Item2.ChangeElement, 1);
                         }
-                        break;            
+                        break;
                 }
             }
 
@@ -245,6 +254,25 @@ namespace Scripts.TouchDice
         private void HideCard()
         {
             card.SetActive(false);
+        }
+
+        private void ChangeLevel()
+        {
+            card.SetActive(false);
+            int level;
+
+            if (PlayerPrefs.HasKey("Level"))
+            {
+                level = int.Parse(PlayerPrefs.GetString("Level"));
+            }
+            else
+            {
+                level = int.Parse(currentLevel.text);
+            }
+
+            level += 1;
+            PlayerPrefs.SetString("Level", level.ToString());
+            SceneManager.LoadScene((int)GameScene.MAIN);
         }
 
         private bool CheckIfCounterHasReachedGoal(string counter)
@@ -295,17 +323,17 @@ namespace Scripts.TouchDice
                 GameObject element = GameObject.Find(elementName);
                 materialName = element.GetComponent<MeshRenderer>().material.name;
             }
-            
+
             if (materialName.Contains("fuego") || elementName.Equals("fuego"))
             {
                 string newText = GetNewCounterValue(fireCounter.text, addElement);
                 return new(waterCounter.text, sandCounter.text, newText, grassCounter.text, woodCounter.text);
-            } 
+            }
             if (materialName.Contains("agua") || elementName.Equals("agua"))
             {
                 string newText = GetNewCounterValue(waterCounter.text, addElement);
                 return new(newText, sandCounter.text, fireCounter.text, grassCounter.text, woodCounter.text);
-            } 
+            }
             if (materialName.Contains("hierba") || elementName.Equals("hierba"))
             {
                 string newText = GetNewCounterValue(grassCounter.text, addElement);
@@ -326,14 +354,14 @@ namespace Scripts.TouchDice
 
         private void OpenOrCloseBag()
         {
-            if(bagIsClosed)
+            if (bagIsClosed)
             {
                 bagClosed.SetActive(false);
                 bagOpen.SetActive(true);
                 counterCanvas.SetActive(true);
                 bagButtonText.text = "PULSA PARA CERRAR";
                 bagIsClosed = false;
-            } 
+            }
             else
             {
                 bagOpen.SetActive(false);
@@ -352,6 +380,13 @@ namespace Scripts.TouchDice
         private void ShowCardOnClickCardButton()
         {
             ShowCard(currentCardRestriction.Item1, currentCardRestriction.Item2);
+        }
+
+        private bool CheckIfUserHasReachedGoal(CounterText.CounterText counterText)
+        {
+            return CheckIfCounterHasReachedGoal(counterText.WaterCounter) && CheckIfCounterHasReachedGoal(counterText.FireCounter) &&
+                CheckIfCounterHasReachedGoal(counterText.WoodCounter) && CheckIfCounterHasReachedGoal(counterText.GrassCounter) &&
+                CheckIfCounterHasReachedGoal(counterText.SandCounter);
         }
 
         void Update()
@@ -440,6 +475,12 @@ namespace Scripts.TouchDice
                         currentPosition = roadElements.IndexOf(hit.transform.name);
                         possiblePositions = new() { };
                         EnableDice();
+
+                        if (CheckIfUserHasReachedGoal(updateCounter))
+                        {
+                            ShowEndCard();
+                            cardButton.onClick.AddListener(ChangeLevel);
+                        }
                     }
                 }
             }
