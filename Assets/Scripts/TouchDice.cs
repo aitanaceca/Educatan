@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using Scripts.CounterText;
+using Scripts.Card;
 
 namespace Scripts.TouchDice
 {
@@ -26,6 +27,7 @@ namespace Scripts.TouchDice
         public Animator characterAnimator;
 
         public Transform mainCharacterTransform;
+        public Transform firsElementTransform;
 
         public TMP_Text fireCounter;
         public TMP_Text waterCounter;
@@ -36,6 +38,8 @@ namespace Scripts.TouchDice
         public TMP_Text bagButtonText;
 
         private TMP_Text diceNumberText;
+
+        public TMP_Text cardText;
 
         private List<string> diceFaces = new() { "Cara1", "Cara2", "Cara3", "Cara4", "Cara5", "Cara6" };
         private List<string> diceAnimations = new() { "dice1", "dice2", "dice3", "dice4", "dice5", "dice6" };
@@ -94,6 +98,9 @@ namespace Scripts.TouchDice
         private int nextCard = 0;
         private bool bagIsClosed = true;
 
+        private (int, Card.Card) currentCardRestriction;
+        private bool cardIsApplied = false;
+
         private List<string> ShowPossibleElements(List<string> possiblePositions, int diceNumberTextToInt)
         {
             if (currentPosition - diceNumberTextToInt >= 0)
@@ -140,9 +147,97 @@ namespace Scripts.TouchDice
             }
         }
 
-        private void ShowCard()
+        private int GetRandomIndex(int maxNumber)
         {
+            System.Random random = new();
+            return random.Next(maxNumber);
+        }
+
+        private Card.Card GetRandomCard()
+        {
+            List<string> elementNames = new() { "agua", "fuego", "hierba", "madera", "arena" };
+
+            int firstRandomIndex = GetRandomIndex(elementNames.Count);
+
+            string element = elementNames[firstRandomIndex];
+
+            elementNames.RemoveAt(firstRandomIndex);
+
+            int secondRandomIndex = GetRandomIndex(elementNames.Count);
+
+            string changeElement = elementNames[secondRandomIndex];
+
+            int diceNumberRandom = GetRandomIndex(diceFaces.Count) + 1;
+
+            return new(element, diceNumberRandom, changeElement);
+        }
+
+        private void ShowCard(int randomCardIndex, Card.Card randomCard)
+        {
+            cardText.text = randomCard.Cards[randomCardIndex];
             card.SetActive(true);
+            cardIsApplied = false;
+        }
+
+        private (string, int) ApplyCardRestriction(int diceNumber, int nextCard, string elementName, Transform characterTransform)
+        {
+            if (currentCardRestriction.Item2 != null)
+            {
+                switch (currentCardRestriction.Item1)
+                {
+                    case 0:
+                        if (diceNumber == currentCardRestriction.Item2.Num)
+                        {
+                            return (currentCardRestriction.Item2.Element, -1);
+                        }
+                        break;
+                    case 1:
+                        if (diceNumber == currentCardRestriction.Item2.Num) { 
+
+                            return (currentCardRestriction.Item2.Element, 1);
+                        }
+                        break;   
+                    case 2:
+                        if (diceNumber == currentCardRestriction.Item2.Num && !cardIsApplied)
+                        {
+                            cardIsApplied = true;
+                            return (currentCardRestriction.Item2.Element, 1);
+                        }
+                        break;
+                    case 3:
+                        if (diceNumber == currentCardRestriction.Item2.Num && !cardIsApplied)
+                        {
+                            cardIsApplied = true;
+                            return (currentCardRestriction.Item2.Element, -1);
+                        }
+                        break;
+                    case 4:
+                        if (diceNumber == currentCardRestriction.Item2.Num && nextCard <= 2)
+                        {
+                            MoveCharacter(firsElementTransform, characterTransform);
+                            if (nextCard == 2)
+                            {
+                                cardIsApplied = true;
+                            }
+                            return (currentCardRestriction.Item2.Element, 1);
+                        }
+                        break;
+                    case 5:
+                        GameObject element = GameObject.Find(elementName);
+                        string materialName = element.GetComponent<MeshRenderer>().material.name;
+                        if (nextCard <= 3 && materialName.Contains(currentCardRestriction.Item2.Element))
+                        {
+                            if (nextCard == 3)
+                            {
+                                cardIsApplied = true;
+                            }
+                            return (currentCardRestriction.Item2.ChangeElement, 1);
+                        }
+                        break;            
+                }
+            }
+
+            return (elementName, 1);
         }
 
         private void HideCard()
@@ -150,41 +245,45 @@ namespace Scripts.TouchDice
             card.SetActive(false);
         }
 
-        private string GetNewCounterValue(string elementText)
+        private string GetNewCounterValue(string elementText, int addElement)
         {
             string[] counterElements = elementText.Split(" ");
-            int updatedCounter = int.Parse(counterElements[0]) + 1;
+            int updatedCounter = int.Parse(counterElements[0]) + addElement;
             return $"{updatedCounter.ToString()} / {counterElements[2]}";
         }
 
-        private CounterText.CounterText UpdateElementCounter(string elementName)
+        private CounterText.CounterText UpdateElementCounter(string elementName, int addElement)
         {
-            GameObject element = GameObject.Find(elementName);
-            string materialName = element.GetComponent<MeshRenderer>().material.name;
-            
-            if (materialName.Contains("fuego"))
+            string materialName = "";
+            if (elementName.Contains("Elemento"))
             {
-                string newText = GetNewCounterValue(fireCounter.text);
+                GameObject element = GameObject.Find(elementName);
+                materialName = element.GetComponent<MeshRenderer>().material.name;
+            }
+            
+            if (materialName.Contains("fuego") || elementName.Equals("fuego"))
+            {
+                string newText = GetNewCounterValue(fireCounter.text, addElement);
                 return new(waterCounter.text, sandCounter.text, newText, grassCounter.text, woodCounter.text);
             } 
-            if (materialName.Contains("agua"))
+            if (materialName.Contains("agua") || elementName.Equals("agua"))
             {
-                string newText = GetNewCounterValue(waterCounter.text);
+                string newText = GetNewCounterValue(waterCounter.text, addElement);
                 return new(newText, sandCounter.text, fireCounter.text, grassCounter.text, woodCounter.text);
             } 
-            if (materialName.Contains("hierba"))
+            if (materialName.Contains("hierba") || elementName.Equals("hierba"))
             {
-                string newText = GetNewCounterValue(grassCounter.text);
+                string newText = GetNewCounterValue(grassCounter.text, addElement);
                 return new(waterCounter.text, sandCounter.text, fireCounter.text, newText, woodCounter.text);
             }
-            if (materialName.Contains("arena"))
+            if (materialName.Contains("arena") || elementName.Equals("arena"))
             {
-                string newText = GetNewCounterValue(sandCounter.text);
+                string newText = GetNewCounterValue(sandCounter.text, addElement);
                 return new(waterCounter.text, newText, fireCounter.text, grassCounter.text, woodCounter.text);
             }
-            if (materialName.Contains("madera"))
+            if (materialName.Contains("madera") || elementName.Equals("madera"))
             {
-                string newText = GetNewCounterValue(woodCounter.text);
+                string newText = GetNewCounterValue(woodCounter.text, addElement);
                 return new(waterCounter.text, sandCounter.text, fireCounter.text, grassCounter.text, newText);
             }
             return new(waterCounter.text, sandCounter.text, fireCounter.text, grassCounter.text, woodCounter.text);
@@ -262,23 +361,32 @@ namespace Scripts.TouchDice
                         MoveCharacter(hit.transform, characterTransform);
                         character.SetActive(true);
 
-                        CounterText.CounterText updateCounter = UpdateElementCounter(hit.transform.name);
-                        fireCounter.text = updateCounter.FireCounter;
-                        waterCounter.text = updateCounter.WaterCounter;
-                        grassCounter.text = updateCounter.GrassCounter;
-                        sandCounter.text = updateCounter.SandCounter;
-                        woodCounter.text = updateCounter.WoodCounter;
-
+                        // Actualizar contadores.
+                        CounterText.CounterText updateCounter;
                         nextCard += 1;
+
                         if (nextCard == 4)
                         {
-                            ShowCard();
+                            // Mostrar tarjeta.
+                            int cardRandomIndex = GetRandomIndex(6);
+                            Card.Card randomCard = GetRandomCard();
+                            ShowCard(cardRandomIndex, randomCard);
                             cardButton.onClick.AddListener(HideCard);
+                            currentCardRestriction = (cardRandomIndex, randomCard);
 
                             // TODO: Bloquear dado hasta que se pulse Aceptar en la carta.
 
                             nextCard = 0;
                         }
+
+                        (string, int) elementsForCounter = ApplyCardRestriction(int.Parse(diceNumberText.text), nextCard, hit.transform.name, characterTransform);
+                        updateCounter = UpdateElementCounter(elementsForCounter.Item1, elementsForCounter.Item2);
+                        
+                        fireCounter.text = updateCounter.FireCounter;
+                        waterCounter.text = updateCounter.WaterCounter;
+                        grassCounter.text = updateCounter.GrassCounter;
+                        sandCounter.text = updateCounter.SandCounter;
+                        woodCounter.text = updateCounter.WoodCounter;
 
                         // Actualizar currentPossition.
                         currentPosition = roadElements.IndexOf(hit.transform.name);
