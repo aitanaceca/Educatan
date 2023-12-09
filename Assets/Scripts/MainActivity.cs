@@ -21,6 +21,7 @@ namespace Scripts.MainActivity
         public GameObject mainCharacter;
         public GameObject bagCanvas;
         public GameObject counterCanvas;
+        public GameObject checkCardCanvas;
         public GameObject bagOpen;
 
         private TMP_Text diceNumberText;
@@ -91,6 +92,7 @@ namespace Scripts.MainActivity
             diceNumberText = diceNumber.GetComponent<TMP_Text>();
             diceNumberText.enabled = false;
             bagCanvas.SetActive(false);
+            checkCardCanvas.SetActive(false);
             counterCanvas.SetActive(false);
             bagOpen.SetActive(false);
             SetInitialCounters();
