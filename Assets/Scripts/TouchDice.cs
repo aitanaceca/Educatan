@@ -245,6 +245,39 @@ namespace Scripts.TouchDice
             card.SetActive(false);
         }
 
+        private bool CheckIfCounterHasReachedGoal(string counter)
+        {
+            string[] counterElements = counter.Split(" ");
+            int count = int.Parse(counterElements[0]);
+            int goal = int.Parse(counterElements[2]);
+            if (count >= goal)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void ChangeCounterColor(TMP_Text counterText, string elementCounter)
+        {
+            if (CheckIfCounterHasReachedGoal(elementCounter))
+            {
+                counterText.color = Color.green;
+            }
+            else
+            {
+                counterText.color = Color.white;
+            }
+        }
+
+        private void ChangeCountersColor(CounterText.CounterText counterText)
+        {
+            ChangeCounterColor(waterCounter, counterText.WaterCounter);
+            ChangeCounterColor(woodCounter, counterText.WoodCounter);
+            ChangeCounterColor(fireCounter, counterText.FireCounter);
+            ChangeCounterColor(grassCounter, counterText.GrassCounter);
+            ChangeCounterColor(sandCounter, counterText.SandCounter);
+        }
+
         private string GetNewCounterValue(string elementText, int addElement)
         {
             string[] counterElements = elementText.Split(" ");
@@ -362,7 +395,6 @@ namespace Scripts.TouchDice
                         character.SetActive(true);
 
                         // Actualizar contadores.
-                        CounterText.CounterText updateCounter;
                         nextCard += 1;
 
                         if (nextCard == 4)
@@ -380,13 +412,15 @@ namespace Scripts.TouchDice
                         }
 
                         (string, int) elementsForCounter = ApplyCardRestriction(int.Parse(diceNumberText.text), nextCard, hit.transform.name, characterTransform);
-                        updateCounter = UpdateElementCounter(elementsForCounter.Item1, elementsForCounter.Item2);
+                        CounterText.CounterText updateCounter = UpdateElementCounter(elementsForCounter.Item1, elementsForCounter.Item2);
                         
                         fireCounter.text = updateCounter.FireCounter;
                         waterCounter.text = updateCounter.WaterCounter;
                         grassCounter.text = updateCounter.GrassCounter;
                         sandCounter.text = updateCounter.SandCounter;
                         woodCounter.text = updateCounter.WoodCounter;
+
+                        ChangeCountersColor(updateCounter);
 
                         // Actualizar currentPossition.
                         currentPosition = roadElements.IndexOf(hit.transform.name);
