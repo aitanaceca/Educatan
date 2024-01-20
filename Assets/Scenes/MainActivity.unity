@@ -8559,6 +8559,7 @@ MonoBehaviour:
   sandCounter: {fileID: 1804892572}
   woodCounter: {fileID: 562607775}
   level: {fileID: 89332416}
+  levelInfo: {fileID: 1621198085}
   waterMaterial: {fileID: 2100000, guid: 142e6aede49221246b381a64635e0b2e, type: 2}
   sandMaterial: {fileID: 2100000, guid: 7513570530a8fce46ab9c9d8213735c9, type: 2}
   fireMaterial: {fileID: 2100000, guid: a66ae05a40d15bc42b9f8ca67cbb72ac, type: 2}

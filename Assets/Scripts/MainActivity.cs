@@ -30,6 +30,7 @@ namespace Scripts.MainActivity
         public TMP_Text sandCounter;
         public TMP_Text woodCounter;
         public TMP_Text level;
+        public TMP_Text levelInfo;
 
         public Material waterMaterial;
         public Material sandMaterial;
@@ -105,10 +106,12 @@ namespace Scripts.MainActivity
             if (PlayerPrefs.HasKey("Level"))
             {
                 currentLevel = int.Parse(PlayerPrefs.GetString("Level"));
+                levelInfo.text = $"NIVEL {PlayerPrefs.GetString("Level")}";
             }
             else
             {
                 currentLevel = int.Parse(level.text);
+                levelInfo.text = $"NIVEL {level.text}";
             }
 
             List<ProBuilderMesh> elements = new()
