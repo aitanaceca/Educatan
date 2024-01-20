@@ -61,7 +61,7 @@ namespace Scripts.MainActivity
 
         private int GetRandomCounterNumber(int level, int minNum, int maxNum)
         {
-            System.Random random = new System.Random();
+            System.Random random = new();
             int randomNumber = random.Next(minNum, maxNum);
             return randomNumber * level;
         }
