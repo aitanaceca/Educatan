@@ -127,7 +127,6 @@ namespace Scripts.Database
                         string dbCardText = dbReader[0].ToString();
                         string cardText = ReplaceVariablesInCardText(dbCardText, num, element, changeElement);
                         result.Add(cardText);
-                        print(cardText);
                     }
                 }
 
