@@ -59,14 +59,20 @@ namespace Scripts.MainActivity
 
         private TMP_Text diceNumberText;
 
-        private void SetInitialCounters(int currentLevel)
+        private int GetRandomCounterNumber(int level, int minNum, int maxNum)
         {
-            LevelElements.LevelElements levelElements = new(currentLevel);
-            fireCounter.text = $"0 / {(levelElements.FireMaterial).ToString()}";
-            waterCounter.text = $"0 / {(levelElements.WaterMaterial).ToString()}";
-            grassCounter.text = $"0 / {(levelElements.GrassMaterial).ToString()}";
-            sandCounter.text = $"0 / {(levelElements.SandMaterial).ToString()}";
-            woodCounter.text = $"0 / {(levelElements.WoodMaterial).ToString()}";
+            System.Random random = new System.Random();
+            int randomNumber = random.Next(minNum, maxNum);
+            return randomNumber * level;
+        }
+
+        private void SetInitialCounters(int level)
+        {
+            fireCounter.text = $"0 / {(GetRandomCounterNumber(level, level, level + 4)).ToString()}";
+            waterCounter.text = $"0 / {(GetRandomCounterNumber(level, level, level + 4)).ToString()}";
+            grassCounter.text = $"0 / {(GetRandomCounterNumber(level, level, level + 4)).ToString()}";
+            sandCounter.text = $"0 / {(GetRandomCounterNumber(level, level, level + 4)).ToString()}";
+            woodCounter.text = $"0 / {(GetRandomCounterNumber(level, level, level + 4)).ToString()}";
         }
 
         private static void HideBridges(List<ProBuilderMesh> elements)
@@ -105,8 +111,6 @@ namespace Scripts.MainActivity
                 currentLevel = int.Parse(level.text);
             }
 
-            SetInitialCounters(currentLevel);
-
             List<ProBuilderMesh> elements = new()
             {
                 element1,
@@ -131,6 +135,8 @@ namespace Scripts.MainActivity
             };
 
             LevelElements.LevelElements levelElements = new(currentLevel);
+
+            SetInitialCounters(currentLevel);
 
             HideBridges(elements);
 
