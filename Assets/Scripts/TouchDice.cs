@@ -105,6 +105,7 @@ namespace Scripts.TouchDice
 
         private (int, Card.Card) currentCardRestriction;
         private bool cardIsApplied = false;
+        private bool characterMovedToFirstElement = false;
 
         private List<string> ShowPossibleElements(List<string> possiblePositions, int diceNumberTextToInt)
         {
@@ -203,7 +204,8 @@ namespace Scripts.TouchDice
                         }
                         break;
                     case 1:
-                        if (diceNumber == currentCardRestriction.Item2.Num) {
+                        if (diceNumber == currentCardRestriction.Item2.Num)
+                        {
 
                             return (currentCardRestriction.Item2.Element, 1);
                         }
@@ -224,8 +226,9 @@ namespace Scripts.TouchDice
                         break;
                     case 4:
                         if (diceNumber == currentCardRestriction.Item2.Num && nextCard <= 2)
-                        {
+                        {            
                             MoveCharacter(firsElementTransform, characterTransform);
+                            characterMovedToFirstElement = true;
                             if (nextCard == 2)
                             {
                                 cardIsApplied = true;
@@ -472,7 +475,15 @@ namespace Scripts.TouchDice
                         ChangeCountersColor(updateCounter);
 
                         // Actualizar currentPossition.
-                        currentPosition = roadElements.IndexOf(hit.transform.name);
+                        if(characterMovedToFirstElement)
+                        {
+                            currentPosition = roadElements.IndexOf("Elemento19");
+                        }
+                        else
+                        {
+                            currentPosition = roadElements.IndexOf(hit.transform.name);
+                        }
+                        characterMovedToFirstElement = false;
                         possiblePositions = new() { };
                         EnableDice();
 
