@@ -24,7 +24,7 @@ namespace Scripts.Card
 
         private void LoadCardsText()
         {
-            Cards = Database.Database.GetCardsTableData(Num, Element, ChangeElement);
+            Cards = Database.Database.GetTableData("cardText", "cards", Num, Element, ChangeElement);
         }
 
         public Card(string element, int num, string changeElement)

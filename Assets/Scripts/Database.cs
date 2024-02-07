@@ -61,17 +61,17 @@ namespace Scripts.Database
                     if (!dbReader.Read())
                     {
                         dbReader.Close();
-                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (1, 'Por cada número {Num} que aparezca en el dado se eliminará un elemento {Element} de la mochila.')";
+                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (1, 'Por cada nï¿½mero {Num} que aparezca en el dado se eliminarï¿½ un elemento {Element} de la mochila.')";
                         dbCommand.ExecuteNonQuery();
-                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (2, 'Por cada número {Num} que aparezca en el dado se añadirá un elemento {Element} de la mochila.')";
+                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (2, 'Por cada nï¿½mero {Num} que aparezca en el dado se aï¿½adirï¿½ un elemento {Element} de la mochila.')";
                         dbCommand.ExecuteNonQuery();
-                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (3, 'Si aparece un número {Num} en el dado se añadirá un elemento {Element} a la mochila.')";
+                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (3, 'Si aparece un nï¿½mero {Num} en el dado se aï¿½adirï¿½ un elemento {Element} a la mochila.')";
                         dbCommand.ExecuteNonQuery();
-                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (4, 'Si aparece un número {Num} en el dado se eliminará un elemento {Element} a la mochila.')";
+                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (4, 'Si aparece un nï¿½mero {Num} en el dado se eliminarï¿½ un elemento {Element} a la mochila.')";
                         dbCommand.ExecuteNonQuery();
-                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (5, 'Durante las próximas 2 tiradas si sacas un {Num} volverás a la casilla de inicio.')";
+                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (5, 'Durante las prï¿½ximas 2 tiradas si sacas un {Num} volverï¿½s a la casilla de inicio.')";
                         dbCommand.ExecuteNonQuery();
-                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (6, 'Durante las próximas 3 tiradas si obtienes un elemento {Element} se convertirá en elemento {ChangeElement}.')";
+                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (6, 'Durante las prï¿½ximas 3 tiradas si obtienes un elemento {Element} se convertirï¿½ en elemento {ChangeElement}.')";
                         dbCommand.ExecuteNonQuery();
                     }
                 }
@@ -120,8 +120,7 @@ namespace Scripts.Database
             return result;
         }
 
-        public static List<string> GetCardsTableData(int num, string element, string changeElement)
-        {
+        public static List<string> GetTableData(string elementName, string tableName, int num, string element, string changeElement) {
             List<string> result = new List<string>() { };
 
             using (var connection = new SqliteConnection(databaseFilePath))
@@ -130,37 +129,15 @@ namespace Scripts.Database
 
                 using (var dbCommand = connection.CreateCommand())
                 {
-                    dbCommand.CommandText = "SELECT cardText FROM cards";
+                    dbCommand.CommandText = $"SELECT {elementName} FROM {tableName}";
                     IDataReader dbReader = dbCommand.ExecuteReader();
                     while (dbReader.Read())
                     {
-                        string dbCardText = dbReader[0].ToString();
-                        string cardText = ReplaceVariablesInCardText(dbCardText, num, element, changeElement);
-                        result.Add(cardText);
-                    }
-                }
-
-                connection.Close();
-                return result;
-            }
-        }
-
-        public static List<string> GetImagesTableData()
-        {
-            List<string> result = new List<string>() { };
-
-            using (var connection = new SqliteConnection(databaseFilePath))
-            {
-                connection.Open();
-
-                using (var dbCommand = connection.CreateCommand())
-                {
-                    dbCommand.CommandText = "SELECT image FROM images";
-                    IDataReader dbReader = dbCommand.ExecuteReader();
-                    while (dbReader.Read())
-                    {
-                        string dbImagePath = dbReader[0].ToString();
-                        result.Add(dbImagePath);
+                        string dbElement = dbReader[0].ToString();
+                        if (string.Equals(tableName, "cards")) {
+                            dbElement = ReplaceVariablesInCardText(dbElement, num, element, changeElement);
+                        }
+                        result.Add(dbElement);
                     }
                 }
                 connection.Close();
