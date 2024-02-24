@@ -38,25 +38,25 @@ namespace Scripts.MainActivity
         public Material grassMaterial;
         public Material woodMaterial;
 
-        public ProBuilderMesh element1;
-        public ProBuilderMesh element2;
-        public ProBuilderMesh element3;
-        public ProBuilderMesh element4;
-        public ProBuilderMesh element5;
-        public ProBuilderMesh element6;
-        public ProBuilderMesh element7;
-        public ProBuilderMesh element8;
-        public ProBuilderMesh element9;
-        public ProBuilderMesh element10;
-        public ProBuilderMesh element11;
-        public ProBuilderMesh element12;
-        public ProBuilderMesh element13;
-        public ProBuilderMesh element14;
-        public ProBuilderMesh element15;
-        public ProBuilderMesh element16;
-        public ProBuilderMesh element17;
-        public ProBuilderMesh element18;
-        public ProBuilderMesh element19;
+        public GameObject element1;
+        public GameObject element2;
+        public GameObject element3;
+        public GameObject element4;
+        public GameObject element5;
+        public GameObject element6;
+        public GameObject element7;
+        public GameObject element8;
+        public GameObject element9;
+        public GameObject element10;
+        public GameObject element11;
+        public GameObject element12;
+        public GameObject element13;
+        public GameObject element14;
+        public GameObject element15;
+        public GameObject element16;
+        public GameObject element17;
+        public GameObject element18;
+        public GameObject element19;
 
         private TMP_Text diceNumberText;
 
@@ -76,7 +76,7 @@ namespace Scripts.MainActivity
             woodCounter.text = $"0 / {(GetRandomCounterNumber(level, level, level + 4)).ToString()}";
         }
 
-        private static void HideBridges(List<ProBuilderMesh> elements)
+        private static void HideBridges(List<GameObject> elements)
         {
             foreach(var elem in elements)
             {
@@ -114,7 +114,7 @@ namespace Scripts.MainActivity
                 levelInfo.text = $"NIVEL {level.text}";
             }
 
-            List<ProBuilderMesh> elements = new()
+            List<GameObject> elements = new()
             {
                 element1,
                 element2,
