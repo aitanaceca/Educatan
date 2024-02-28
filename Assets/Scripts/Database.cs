@@ -9,21 +9,14 @@ namespace Scripts.Database
     public class Database : MonoBehaviour
     {
         public static Database instance;
-        private static string databaseFilePath = "URI=file:Assets/Database/Database.db";
+        private static string databaseFilePath = "URI=file:Assets/StreamingAssets/Database.db";
 
         private void Awake()
         {
             instance = this;
         }
 
-        void Start()
-        {
-            CreateTable();
-            InsertDataToCardsTable();
-            InsertDataToImagesTable();
-        }
-
-        private void CreateTable()
+        public static void CreateTables()
         {
             using (var connection = new SqliteConnection(databaseFilePath))
             {
@@ -35,7 +28,7 @@ namespace Scripts.Database
                       "CREATE TABLE IF NOT EXISTS cards (id INTEGER PRIMARY KEY AUTOINCREMENT, cardText VARCHAR(255))";
 
                     string createImagesTable =
-                      "CREATE TABLE IF NOT EXISTS images (id INTEGER PRIMARY KEY AUTOINCREMENT, image LONGBLOB)";
+                      "CREATE TABLE IF NOT EXISTS images (id INTEGER PRIMARY KEY AUTOINCREMENT, image VARCHAR(255))";
 
                     dbCommand.CommandText = createCardsTable;
                     dbCommand.ExecuteNonQuery();
@@ -46,7 +39,7 @@ namespace Scripts.Database
             }
         }
 
-        private void InsertDataToCardsTable()
+        public static void InsertDataToCardsTable()
         {
             using (var connection = new SqliteConnection(databaseFilePath))
             {
@@ -61,17 +54,17 @@ namespace Scripts.Database
                     if (!dbReader.Read())
                     {
                         dbReader.Close();
-                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (1, 'Por cada n�mero {Num} que aparezca en el dado se eliminar� un elemento {Element} de la mochila.')";
+                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (1, 'Por cada número {Num} que aparezca en el dado se eliminará un elemento {Element} de la mochila.')";
                         dbCommand.ExecuteNonQuery();
-                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (2, 'Por cada n�mero {Num} que aparezca en el dado se a�adir� un elemento {Element} de la mochila.')";
+                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (2, 'Por cada número {Num} que aparezca en el dado se añadirá un elemento {Element} de la mochila.')";
                         dbCommand.ExecuteNonQuery();
-                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (3, 'Si aparece un n�mero {Num} en el dado se a�adir� un elemento {Element} a la mochila.')";
+                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (3, 'Si aparece un número {Num} en el dado se añadirá un elemento {Element} a la mochila.')";
                         dbCommand.ExecuteNonQuery();
-                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (4, 'Si aparece un n�mero {Num} en el dado se eliminar� un elemento {Element} a la mochila.')";
+                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (4, 'Si aparece un número {Num} en el dado se eliminará un elemento {Element} a la mochila.')";
                         dbCommand.ExecuteNonQuery();
-                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (5, 'Durante las pr�ximas 2 tiradas si sacas un {Num} volver�s a la casilla de inicio.')";
+                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (5, 'Durante las próximas 2 tiradas si sacas un {Num} volverás a la casilla de inicio.')";
                         dbCommand.ExecuteNonQuery();
-                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (6, 'Durante las pr�ximas 3 tiradas si obtienes un elemento {Element} se convertir� en elemento {ChangeElement}.')";
+                        dbCommand.CommandText = "INSERT INTO cards (id, cardText) VALUES (6, 'Durante las próximas 3 tiradas si obtienes un elemento {Element} se convertirá en elemento {ChangeElement}.')";
                         dbCommand.ExecuteNonQuery();
                     }
                 }
@@ -79,7 +72,7 @@ namespace Scripts.Database
             }
         }
 
-        private void InsertDataToImagesTable()
+        public static void InsertDataToImagesTable()
         {
             using (var connection = new SqliteConnection(databaseFilePath))
             {
