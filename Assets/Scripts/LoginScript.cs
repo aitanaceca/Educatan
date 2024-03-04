@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using Scripts.Scenes;
+using Scripts.Database;
 
 namespace Scripts.LoginScript
 {
@@ -33,11 +34,12 @@ namespace Scripts.LoginScript
             ageErrorText.enabled = false;
             loginButton.onClick.AddListener(ValidateLogin);
             helpButton.onClick.AddListener(HelpView);
-
         }
 
         private void HelpView()
         {
+            Database.Database database = new("Database.db");
+            Database.Database.CreateTables();
             SceneManager.LoadScene((int)GameScene.HELP);
         }
 
