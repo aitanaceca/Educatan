@@ -15,7 +15,6 @@ namespace Scripts.Database
 
 		public Database(string DatabaseName)
 		{
-			//var filepath = string.Format(@"Assets/StreamingAssets/{0}", DatabaseName);
 			var filepath = string.Format("{0}/{1}", Application.persistentDataPath, DatabaseName);
 
 			if (!File.Exists(filepath))
