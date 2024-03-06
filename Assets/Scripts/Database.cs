@@ -21,19 +21,18 @@ namespace Scripts.Database
 			{
 				Debug.Log("Database not in Persistent path");
 
-				var loadDb = new WWW("jar:file://" + Application.dataPath + "!/assets/" + DatabaseName);
-				while (!loadDb.isDone) { }
+				UnityWebRequest loadDb = UnityWebRequest.Get("jar:file://" + Application.dataPath + "!/assets/" + DatabaseName);
+				loadDb.SendWebRequest();
 
-				File.WriteAllBytes(filepath, loadDb.bytes);
-
-				Debug.Log("Database written");
+				if (loadDb.result != UnityWebRequest.Result.ConnectionError)
+				{
+					byte[] fileData = loadDb.downloadHandler.data;
+					File.WriteAllBytes(filepath, fileData);
+				}
 			}
-
 			var dbPath = filepath;
 
 			_connection = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
-			Debug.Log("Final PATH: " + dbPath);
-
 		}
 
 		public static void CreateTables()
