@@ -38,7 +38,7 @@ namespace Scripts.LoginScript
 
         private void HelpView()
         {
-            Database.Database database = new("Database.db");
+            Database.Database.InitializeDatabase("Database.db");
             Database.Database.CreateTables();
             SceneManager.LoadScene((int)GameScene.HELP);
         }
