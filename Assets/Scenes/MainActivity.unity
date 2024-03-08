@@ -8914,30 +8914,29 @@ MonoBehaviour:
   OnTargetLost:
     m_PersistentCalls:
       m_Calls: []
-  diceNumber: {fileID: 1306368568}
-  character: {fileID: 1506702289}
-  dice: {fileID: 1665344496}
-  card: {fileID: 645619570}
-  counterCanvas: {fileID: 1237876191}
-  checkCardCanvas: {fileID: 727855783}
-  bagOpen: {fileID: 1221035274}
-  bagClosed: {fileID: 1856083647}
-  cardButton: {fileID: 1235875417}
-  bagButton: {fileID: 1194622296}
-  checkCardButton: {fileID: 3334437}
-  diceAnimator: {fileID: 1665344504}
-  boardAnimator: {fileID: 831360723}
-  characterAnimator: {fileID: 1832164330}
-  mainCharacterTransform: {fileID: 1832164329}
-  firsElementTransform: {fileID: 1404627617}
-  fireCounter: {fileID: 108487728}
-  waterCounter: {fileID: 554223419}
-  grassCounter: {fileID: 1917411169}
-  sandCounter: {fileID: 1804892572}
-  woodCounter: {fileID: 562607775}
-  currentLevel: {fileID: 89332416}
-  bagButtonText: {fileID: 325692355}
-  cardText: {fileID: 742100067}
+  _diceNumber: {fileID: 1306368568}
+  _character: {fileID: 1506702289}
+  _dice: {fileID: 1665344496}
+  _card: {fileID: 645619570}
+  _counterCanvas: {fileID: 1237876191}
+  _checkCardCanvas: {fileID: 727855783}
+  _bagOpen: {fileID: 1221035274}
+  _bagClosed: {fileID: 1856083647}
+  _cardButton: {fileID: 1235875417}
+  _bagButton: {fileID: 1194622296}
+  _checkCardButton: {fileID: 3334437}
+  _diceAnimator: {fileID: 1665344504}
+  _boardAnimator: {fileID: 831360723}
+  _mainCharacterTransform: {fileID: 1832164329}
+  _firsElementTransform: {fileID: 1404627617}
+  _fireCounter: {fileID: 108487728}
+  _waterCounter: {fileID: 554223419}
+  _grassCounter: {fileID: 1917411169}
+  _sandCounter: {fileID: 1804892572}
+  _woodCounter: {fileID: 562607775}
+  _currentLevel: {fileID: 89332416}
+  _bagButtonText: {fileID: 325692355}
+  _cardText: {fileID: 742100067}
 --- !u!114 &937432847
 MonoBehaviour:
   m_ObjectHideFlags: 0

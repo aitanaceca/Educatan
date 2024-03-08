@@ -13,46 +13,182 @@ namespace Scripts.TouchDice
 {
     public class TouchDice : DefaultObserverEventHandler
     {
-        public GameObject diceNumber;
-        public GameObject character;
-        public GameObject dice;
-        public GameObject card;
-        public GameObject counterCanvas;
-        public GameObject checkCardCanvas;
-        public GameObject bagOpen;
-        public GameObject bagClosed;
+        [SerializeField] private GameObject _diceNumber;
+        [SerializeField] private GameObject _character;
+        [SerializeField] private GameObject _dice;
+        [SerializeField] private GameObject _card;
+        [SerializeField] private GameObject _counterCanvas;
+        [SerializeField] private GameObject _checkCardCanvas;
+        [SerializeField] private GameObject _bagOpen;
+        [SerializeField] private GameObject _bagClosed;
 
-        public Button cardButton;
-        public Button bagButton;
-        public Button checkCardButton;
+        [SerializeField] private Button _cardButton;
+        [SerializeField] private Button _bagButton;
+        [SerializeField] private Button _checkCardButton;
 
-        public Animator diceAnimator;
-        public Animator boardAnimator;
-        public Animator characterAnimator;
+        [SerializeField] private Animator _diceAnimator;
+        [SerializeField] private Animator _boardAnimator;
 
-        public Transform mainCharacterTransform;
-        public Transform firsElementTransform;
+        [SerializeField] private Transform _mainCharacterTransform;
+        [SerializeField] private Transform _firsElementTransform;
 
-        public TMP_Text fireCounter;
-        public TMP_Text waterCounter;
-        public TMP_Text grassCounter;
-        public TMP_Text sandCounter;
-        public TMP_Text woodCounter;
-        public TMP_Text currentLevel;
+        [SerializeField] private TMP_Text _fireCounter;
+        [SerializeField] private TMP_Text _waterCounter;
+        [SerializeField] private TMP_Text _grassCounter;
+        [SerializeField] private TMP_Text _sandCounter;
+        [SerializeField] private TMP_Text _woodCounter;
+        [SerializeField] private TMP_Text _currentLevel;
+        [SerializeField] private TMP_Text _bagButtonText;
+        [SerializeField] private TMP_Text _cardText;
 
-        public TMP_Text bagButtonText;
+
+        public GameObject DiceNumber
+        {
+            get { return _diceNumber; }
+            set { _diceNumber = value; }
+        }
+
+        public GameObject Character
+        {
+            get { return _character; }
+            set { _character = value; }
+        }
+
+        public GameObject Dice
+        {
+            get { return _dice; }
+            set { _dice = value; }
+        }
+
+        public GameObject Card
+        {
+            get { return _card; }
+            set { _card = value; }
+        }
+
+        public GameObject CounterCanvas
+        {
+            get { return _counterCanvas; }
+            set { _counterCanvas = value; }
+        }
+
+        public GameObject CheckCardCanvas
+        {
+            get { return _checkCardCanvas; }
+            set { _checkCardCanvas = value; }
+        }
+
+        public GameObject BagOpen
+        {
+            get { return _bagOpen; }
+            set { _bagOpen = value; }
+        }
+
+        public GameObject BagClosed
+        {
+            get { return _bagClosed; }
+            set { _bagClosed = value; }
+        }
+
+        public Button CardButton
+        {
+            get { return _cardButton; }
+            set { _cardButton = value; }
+        }
+
+        public Button BagButton
+        {
+            get { return _bagButton; }
+            set { _bagButton = value; }
+        }
+
+        public Button CheckCardButton
+        {
+            get { return _checkCardButton; }
+            set { _checkCardButton = value; }
+        }
+
+        public Animator DiceAnimator
+        {
+            get { return _diceAnimator; }
+            set { _diceAnimator = value; }
+        }
+
+        public Animator BoardAnimator
+        {
+            get { return _boardAnimator; }
+            set { _boardAnimator = value; }
+        }
+
+        public Transform MainCharacterTransform
+        {
+            get { return _mainCharacterTransform; }
+            set { _mainCharacterTransform = value; }
+        }
+
+        public Transform FirsElementTransform
+        {
+            get { return _firsElementTransform; }
+            set { _firsElementTransform = value; }
+        }
+
+        public TMP_Text FireCounter
+        {
+            get { return _fireCounter; }
+            set { _fireCounter = value; }
+        }
+
+        public TMP_Text WaterCounter
+        {
+            get { return _waterCounter; }
+            set { _waterCounter = value; }
+        }
+
+        public TMP_Text GrassCounter
+        {
+            get { return _grassCounter; }
+            set { _grassCounter = value; }
+        }
+
+        public TMP_Text SandCounter
+        {
+            get { return _sandCounter; }
+            set { _sandCounter = value; }
+        }
+
+        public TMP_Text WoodCounter
+        {
+            get { return _woodCounter; }
+            set { _woodCounter = value; }
+        }
+
+        public TMP_Text CurrentLevel
+        {
+            get { return _currentLevel; }
+            set { _currentLevel = value; }
+        }
+
+        public TMP_Text BagButtonText
+        {
+            get { return _bagButtonText; }
+            set { _bagButtonText = value; }
+        }
+
+        public TMP_Text CardText
+        {
+            get { return _cardText; }
+            set { _cardText = value; }
+        }
 
         private TMP_Text diceNumberText;
 
-        public TMP_Text cardText;
-
-        private List<string> diceFaces = new() { "Cara1", "Cara2", "Cara3", "Cara4", "Cara5", "Cara6" };
-        private List<string> diceAnimations = new() { "dice1", "dice2", "dice3", "dice4", "dice5", "dice6" };
+        private readonly List<string> diceFaces = new() { "Cara1", "Cara2", "Cara3", "Cara4", "Cara5", "Cara6" };
+        private readonly List<string> diceAnimations = new() { "dice1", "dice2", "dice3", "dice4", "dice5", "dice6" };
 
         private int finalRandomNumber;
 
         private int currentPosition = 0;
-        private List<string> roadElements = new()
+        private readonly List<string> roadElements = new()
         {
             "Elemento19",
             "Elemento18",
@@ -75,7 +211,7 @@ namespace Scripts.TouchDice
             "Elemento1"
         };
 
-        private List<string> upElementsAnimationNames = new()
+        private readonly List<string> upElementsAnimationNames = new()
         {
             "upElement19Trigger",
             "upElement18Trigger",
@@ -111,13 +247,13 @@ namespace Scripts.TouchDice
         {
             if (currentPosition - diceNumberTextToInt >= 0)
             {
-                boardAnimator.SetTrigger(upElementsAnimationNames[currentPosition - diceNumberTextToInt]);
+                _boardAnimator.SetTrigger(upElementsAnimationNames[currentPosition - diceNumberTextToInt]);
                 possiblePositions.Add(roadElements[currentPosition - diceNumberTextToInt]);
             }
 
             if (currentPosition + diceNumberTextToInt < roadElements.Count)
             {
-                boardAnimator.SetTrigger(upElementsAnimationNames[currentPosition + diceNumberTextToInt]);
+                _boardAnimator.SetTrigger(upElementsAnimationNames[currentPosition + diceNumberTextToInt]);
                 possiblePositions.Add(roadElements[currentPosition + diceNumberTextToInt]);
             }
 
@@ -133,7 +269,7 @@ namespace Scripts.TouchDice
 
         private void BlockDice()
         {
-            Transform[] diceFacesGameObjects = dice.GetComponentsInChildren<Transform>();
+            Transform[] diceFacesGameObjects = _dice.GetComponentsInChildren<Transform>();
 
             foreach (Transform diceFace in diceFacesGameObjects)
             {
@@ -144,7 +280,7 @@ namespace Scripts.TouchDice
 
         private void EnableDice()
         {
-            Transform[] diceFacesGameObjects = dice.GetComponentsInChildren<Transform>();
+            Transform[] diceFacesGameObjects = _dice.GetComponentsInChildren<Transform>();
 
             foreach (Transform diceFace in diceFacesGameObjects)
             {
@@ -180,15 +316,15 @@ namespace Scripts.TouchDice
 
         private void ShowCard(int randomCardIndex, Card.Card randomCard)
         {
-            cardText.text = randomCard.Cards[randomCardIndex];
-            card.SetActive(true);
+            _cardText.text = randomCard.Cards[randomCardIndex];
+            _card.SetActive(true);
             cardIsApplied = false;
         }
 
         private void ShowEndCard()
         {
-            cardText.text = "ENHORABUENA, HAS COMPLETADO EL NIVEL.";
-            card.SetActive(true);
+            _cardText.text = "ENHORABUENA, HAS COMPLETADO EL NIVEL.";
+            _card.SetActive(true);
         }
 
         private (string, int) ApplyCardRestriction(int diceNumber, int nextCard, string elementName, Transform characterTransform)
@@ -227,7 +363,7 @@ namespace Scripts.TouchDice
                     case 4:
                         if (diceNumber == currentCardRestriction.Item2.Num && nextCard <= 2)
                         {            
-                            MoveCharacter(firsElementTransform, characterTransform);
+                            MoveCharacter(_firsElementTransform, characterTransform);
                             characterMovedToFirstElement = true;
                             if (nextCard == 2)
                             {
@@ -256,12 +392,12 @@ namespace Scripts.TouchDice
 
         private void HideCard()
         {
-            card.SetActive(false);
+            _card.SetActive(false);
         }
 
         private void ChangeLevel()
         {
-            card.SetActive(false);
+            _card.SetActive(false);
             int level;
 
             if (PlayerPrefs.HasKey("Level"))
@@ -270,7 +406,7 @@ namespace Scripts.TouchDice
             }
             else
             {
-                level = int.Parse(currentLevel.text);
+                level = int.Parse(_currentLevel.text);
             }
 
             level += 1;
@@ -304,11 +440,11 @@ namespace Scripts.TouchDice
 
         private void ChangeCountersColor(CounterText.CounterText counterText)
         {
-            ChangeCounterColor(waterCounter, counterText.WaterCounter);
-            ChangeCounterColor(woodCounter, counterText.WoodCounter);
-            ChangeCounterColor(fireCounter, counterText.FireCounter);
-            ChangeCounterColor(grassCounter, counterText.GrassCounter);
-            ChangeCounterColor(sandCounter, counterText.SandCounter);
+            ChangeCounterColor(_waterCounter, counterText.WaterCounter);
+            ChangeCounterColor(_woodCounter, counterText.WoodCounter);
+            ChangeCounterColor(_fireCounter, counterText.FireCounter);
+            ChangeCounterColor(_grassCounter, counterText.GrassCounter);
+            ChangeCounterColor(_sandCounter, counterText.SandCounter);
         }
 
         private string GetNewCounterValue(string elementText, int addElement)
@@ -329,55 +465,55 @@ namespace Scripts.TouchDice
 
             if (materialName.Contains("fuego") || elementName.Equals("fuego"))
             {
-                string newText = GetNewCounterValue(fireCounter.text, addElement);
-                return new(waterCounter.text, sandCounter.text, newText, grassCounter.text, woodCounter.text);
+                string newText = GetNewCounterValue(_fireCounter.text, addElement);
+                return new(_waterCounter.text, _sandCounter.text, newText, _grassCounter.text, _woodCounter.text);
             }
             if (materialName.Contains("agua") || elementName.Equals("agua"))
             {
-                string newText = GetNewCounterValue(waterCounter.text, addElement);
-                return new(newText, sandCounter.text, fireCounter.text, grassCounter.text, woodCounter.text);
+                string newText = GetNewCounterValue(_waterCounter.text, addElement);
+                return new(newText, _sandCounter.text, _fireCounter.text, _grassCounter.text, _woodCounter.text);
             }
             if (materialName.Contains("hierba") || elementName.Equals("hierba"))
             {
-                string newText = GetNewCounterValue(grassCounter.text, addElement);
-                return new(waterCounter.text, sandCounter.text, fireCounter.text, newText, woodCounter.text);
+                string newText = GetNewCounterValue(_grassCounter.text, addElement);
+                return new(_waterCounter.text, _sandCounter.text, _fireCounter.text, newText, _woodCounter.text);
             }
             if (materialName.Contains("arena") || elementName.Equals("arena"))
             {
-                string newText = GetNewCounterValue(sandCounter.text, addElement);
-                return new(waterCounter.text, newText, fireCounter.text, grassCounter.text, woodCounter.text);
+                string newText = GetNewCounterValue(_sandCounter.text, addElement);
+                return new(_waterCounter.text, newText, _fireCounter.text, _grassCounter.text, _woodCounter.text);
             }
             if (materialName.Contains("madera") || elementName.Equals("madera"))
             {
-                string newText = GetNewCounterValue(woodCounter.text, addElement);
-                return new(waterCounter.text, sandCounter.text, fireCounter.text, grassCounter.text, newText);
+                string newText = GetNewCounterValue(_woodCounter.text, addElement);
+                return new(_waterCounter.text, _sandCounter.text, _fireCounter.text, _grassCounter.text, newText);
             }
-            return new(waterCounter.text, sandCounter.text, fireCounter.text, grassCounter.text, woodCounter.text);
+            return new(_waterCounter.text, _sandCounter.text, _fireCounter.text, _grassCounter.text, _woodCounter.text);
         }
 
         private void OpenOrCloseBag()
         {
             if (bagIsClosed)
             {
-                bagClosed.SetActive(false);
-                bagOpen.SetActive(true);
-                counterCanvas.SetActive(true);
-                bagButtonText.text = "PULSA PARA CERRAR";
+                _bagClosed.SetActive(false);
+                _bagOpen.SetActive(true);
+                _counterCanvas.SetActive(true);
+                _bagButtonText.text = "PULSA PARA CERRAR";
                 bagIsClosed = false;
             }
             else
             {
-                bagOpen.SetActive(false);
-                bagClosed.SetActive(true);
-                counterCanvas.SetActive(false);
-                bagButtonText.text = "PULSA PARA ABRIR";
+                _bagOpen.SetActive(false);
+                _bagClosed.SetActive(true);
+                _counterCanvas.SetActive(false);
+                _bagButtonText.text = "PULSA PARA ABRIR";
                 bagIsClosed = true;
             }
         }
 
         private void ShowCheckCardCanvas()
         {
-            checkCardCanvas.SetActive(true);
+            _checkCardCanvas.SetActive(true);
         }
 
         private void ShowCardOnClickCardButton()
@@ -392,11 +528,39 @@ namespace Scripts.TouchDice
                 CheckIfCounterHasReachedGoal(counterText.SandCounter);
         }
 
+        private void InitializeElements()
+        {
+            _diceNumber = DiceNumber;
+            _character = Character;
+            _dice = Dice;
+            _card = Card;
+            _counterCanvas = CounterCanvas;
+            _checkCardCanvas = CheckCardCanvas;
+            _bagOpen = BagOpen;
+            _bagClosed = BagClosed;
+            _cardButton = CardButton;
+            _bagButton = BagButton;
+            _checkCardButton = CheckCardButton;
+            _diceAnimator = DiceAnimator;
+            _boardAnimator = BoardAnimator;
+            _mainCharacterTransform = MainCharacterTransform;
+            _firsElementTransform = FirsElementTransform;
+            _fireCounter = FireCounter;
+            _waterCounter = WaterCounter;
+            _grassCounter = GrassCounter;
+            _sandCounter = SandCounter;
+            _woodCounter = WoodCounter;
+            _currentLevel = CurrentLevel;
+            _bagButtonText = BagButtonText;
+            _cardText = CardText;
+        }
+
         void Update()
         {
-            bagButton.onClick.AddListener(OpenOrCloseBag);
-            checkCardButton.onClick.AddListener(ShowCardOnClickCardButton);
-            diceNumberText = diceNumber.GetComponent<TMP_Text>();
+            InitializeElements();
+            _bagButton.onClick.AddListener(OpenOrCloseBag);
+            _checkCardButton.onClick.AddListener(ShowCardOnClickCardButton);
+            diceNumberText = _diceNumber.GetComponent<TMP_Text>();
             diceNumberText.enabled = false;
             int diceNumberTextToInt = 0;
 
@@ -414,7 +578,7 @@ namespace Scripts.TouchDice
                         // Genera un numero aleatorio entre 0 y 5
                         int randomNumber = random.Next(0, diceAnimations.Count);
 
-                        diceAnimator.Play(diceAnimations[randomNumber]);
+                        _diceAnimator.Play(diceAnimations[randomNumber]);
 
                         finalRandomNumber = randomNumber + 1;
                         diceNumberText.text = finalRandomNumber.ToString();
@@ -433,17 +597,15 @@ namespace Scripts.TouchDice
                             int index = roadElements.IndexOf(position);
                             string triggerName = upElementsAnimationNames[index];
                             string stopTrigger = triggerName + "Stop";
-                            boardAnimator.SetTrigger(stopTrigger);
+                            _boardAnimator.SetTrigger(stopTrigger);
                         }
-
-                        // TODO: Arreglar que el muñeco se mueva cuando se baje la pieza.
                         
                         // Movimiento del personaje.
-                        Transform characterTransform = mainCharacterTransform;
+                        Transform characterTransform = _mainCharacterTransform;
 
-                        character.SetActive(false);
+                        _character.SetActive(false);
                         MoveCharacter(hit.transform, characterTransform);
-                        character.SetActive(true);
+                        _character.SetActive(true);
 
                         // Actualizar contadores.
                         nextCard += 1;
@@ -454,10 +616,8 @@ namespace Scripts.TouchDice
                             int cardRandomIndex = GetRandomIndex(6);
                             Card.Card randomCard = GetRandomCard();
                             ShowCard(cardRandomIndex, randomCard);
-                            cardButton.onClick.AddListener(HideCard);
+                            _cardButton.onClick.AddListener(HideCard);
                             currentCardRestriction = (cardRandomIndex, randomCard);
-
-                            // TODO: Bloquear dado hasta que se pulse Aceptar en la carta.
 
                             nextCard = 0;
                             ShowCheckCardCanvas();
@@ -466,11 +626,11 @@ namespace Scripts.TouchDice
                         (string, int) elementsForCounter = ApplyCardRestriction(int.Parse(diceNumberText.text), nextCard, hit.transform.name, characterTransform);
                         CounterText.CounterText updateCounter = UpdateElementCounter(elementsForCounter.Item1, elementsForCounter.Item2);
                         
-                        fireCounter.text = updateCounter.FireCounter;
-                        waterCounter.text = updateCounter.WaterCounter;
-                        grassCounter.text = updateCounter.GrassCounter;
-                        sandCounter.text = updateCounter.SandCounter;
-                        woodCounter.text = updateCounter.WoodCounter;
+                        _fireCounter.text = updateCounter.FireCounter;
+                        _waterCounter.text = updateCounter.WaterCounter;
+                        _grassCounter.text = updateCounter.GrassCounter;
+                        _sandCounter.text = updateCounter.SandCounter;
+                        _woodCounter.text = updateCounter.WoodCounter;
 
                         ChangeCountersColor(updateCounter);
 
@@ -490,7 +650,7 @@ namespace Scripts.TouchDice
                         if (CheckIfUserHasReachedGoal(updateCounter))
                         {
                             ShowEndCard();
-                            cardButton.onClick.AddListener(ChangeLevel);
+                            _cardButton.onClick.AddListener(ChangeLevel);
                         }
                     }
                 }
