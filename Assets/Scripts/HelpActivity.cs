@@ -11,12 +11,34 @@ namespace Scripts.HelpActivity
 {
     public class HelpActivity : MonoBehaviour
     {
-        public Image HelpImage;
-        public Button BackButton;
-        public Button PrevButton;
-        public Button NextButton;
+        [SerializeField] private Image _helpImage;
+        [SerializeField] private Button _backButton;
+        [SerializeField] private Button _prevButton;
+        [SerializeField] private Button _nextButton;
 
-        private Image _helpImage;
+        public Image HelpImage
+        {
+            get { return _helpImage; }
+            set { _helpImage = value; }
+        }
+
+        public Button BackButton
+        {
+            get { return _backButton; }
+            set { _backButton = value; }
+        }
+
+        public Button PrevButton
+        {
+            get { return _prevButton; }
+            set { _prevButton = value; }
+        }
+
+        public Button NextButton
+        {
+            get { return _nextButton; }
+            set { _nextButton = value; }
+        }
 
         private List<string> images;
         private int currentIndex = 0;
