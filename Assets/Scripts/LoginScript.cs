@@ -11,12 +11,48 @@ namespace Scripts.LoginScript
 {
     public class LoginScript : MonoBehaviour
     {
-        public GameObject nameInput;
-        public GameObject ageInput;
-        public GameObject nameError;
-        public GameObject ageError;
-        public Button loginButton;
-        public Button helpButton;
+        [SerializeField] private GameObject _nameInput;
+        [SerializeField] private GameObject _ageInput;
+        [SerializeField] private GameObject _nameError;
+        [SerializeField] private GameObject _ageError;
+        [SerializeField] private Button _loginButton;
+        [SerializeField] private Button _helpButton;
+
+        public GameObject NameInput
+        {
+            get { return _nameInput; }
+            set { _nameInput = value; }
+        }
+
+        public GameObject AgeInput
+        {
+            get { return _ageInput; }
+            set { _ageInput = value; }
+        }
+
+        public GameObject NameError
+        {
+            get { return _nameError; }
+            set { _nameError = value; }
+        }
+
+        public GameObject AgeError
+        {
+            get { return _ageError; }
+            set { _ageError = value; }
+        }
+
+        public Button LoginButton
+        {
+            get { return _loginButton; }
+            set { _loginButton = value; }
+        }
+
+        public Button HelpButton
+        {
+            get { return _helpButton; }
+            set { _helpButton = value; }
+        }
 
         private TMP_InputField nameInputField;
         private TMP_InputField ageInputField;
@@ -26,14 +62,21 @@ namespace Scripts.LoginScript
 
         private void Start()
         {
-            nameInputField = nameInput.GetComponent<TMP_InputField>();
-            ageInputField = ageInput.GetComponent<TMP_InputField>();
-            nameErrorText = nameError.GetComponent<TMP_Text>();
-            ageErrorText = ageError.GetComponent<TMP_Text>();
+            _nameInput = NameInput;
+            _ageInput = AgeInput;
+            _nameError = NameError;
+            _ageError = AgeError;
+            _loginButton = LoginButton;
+            _helpButton = HelpButton;
+
+            nameInputField = _nameInput.GetComponent<TMP_InputField>();
+            ageInputField = _ageInput.GetComponent<TMP_InputField>();
+            nameErrorText = _nameError.GetComponent<TMP_Text>();
+            ageErrorText = _ageError.GetComponent<TMP_Text>();
             nameErrorText.enabled = false;
             ageErrorText.enabled = false;
-            loginButton.onClick.AddListener(ValidateLogin);
-            helpButton.onClick.AddListener(HelpView);
+            _loginButton.onClick.AddListener(ValidateLogin);
+            _helpButton.onClick.AddListener(HelpView);
         }
 
         private void HelpView()
