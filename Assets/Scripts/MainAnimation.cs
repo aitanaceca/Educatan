@@ -15,37 +15,76 @@ namespace Scripts.Animation
 {
     public class MainAnimation : DefaultObserverEventHandler
     {
-        public Animator animator;
-        public Animator characterAnimator;
+        [SerializeField] private Animator _animator;
+        [SerializeField] private Animator _characterAnimator;
+        [SerializeField] private GameObject _dice;
+        [SerializeField] private GameObject _mainCharacter;
+        [SerializeField] private GameObject _bagCanvas;
+        [SerializeField] private GameObject _board;
+        [SerializeField] private Transform _mainCharacterTransform;
 
-        public GameObject dice;
-        public GameObject mainCharacter;
-        public GameObject bagCanvas;
-        
-        public GameObject board;
+        public Animator Animator
+        {
+            get { return _animator; }
+            set { _animator = value; }
+        }
 
-        public Transform mainCharacterTransform;
+        public Animator CharacterAnimator
+        {
+            get { return _characterAnimator; }
+            set { _characterAnimator = value; }
+        }
+
+        public GameObject Dice
+        {
+            get { return _dice; }
+            set { _dice = value; }
+        }
+
+        public GameObject MainCharacter
+        {
+            get { return _mainCharacter; }
+            set { _mainCharacter = value; }
+        }
+
+        public GameObject BagCanvas
+        {
+            get { return _bagCanvas; }
+            set { _bagCanvas = value; }
+        }
+
+        public GameObject Board
+        {
+            get { return _board; }
+            set { _board = value; }
+        }
+
+        public Transform MainCharacterTransform
+        {
+            get { return _mainCharacterTransform; }
+            set { _mainCharacterTransform = value; }
+        }
 
         private bool characterMoved = false;
 
         private void ShowBagCanvas()
         {
-            bagCanvas.SetActive(true);
+            _bagCanvas.SetActive(true);
         }
 
         private void ShowCharacter()
         {
-            mainCharacter.SetActive(true);
+            _mainCharacter.SetActive(true);
         }
 
         private void ShowDice()
         {
-            dice.SetActive(true);
+            _dice.SetActive(true);
         }
 
         private void ShowBridges()
         {
-            Transform[] boardTransforms = board.GetComponentsInChildren<Transform>();
+            Transform[] boardTransforms = _board.GetComponentsInChildren<Transform>();
 
             foreach (var elem in boardTransforms)
             {
@@ -63,12 +102,20 @@ namespace Scripts.Animation
 
         protected override void OnTrackingFound()
         {
-            animator.Play("board");
+            _animator.Play("board");
         }
 
         void Update()
         {
-            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime * animator.GetCurrentAnimatorStateInfo(0).length >= 9.5)
+            _animator = Animator;
+            _characterAnimator = CharacterAnimator;
+            _dice = Dice;
+            _mainCharacter = MainCharacter;
+            _bagCanvas = BagCanvas;
+            _board = Board;
+            _mainCharacterTransform = MainCharacterTransform;
+
+            if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime * _animator.GetCurrentAnimatorStateInfo(0).length >= 9.5)
             {
                 ShowBagCanvas();
                 ShowBridges();
