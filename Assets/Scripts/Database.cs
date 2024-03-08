@@ -6,12 +6,13 @@ using UnityEngine.Networking;
 using System.Collections.Generic;
 using Scripts.RandomCardText;
 using Scripts.CardImage;
+using System.Linq;
 
 namespace Scripts.Database
 {
 	public class Database
 	{
-		private SQLiteConnection _connection;
+		private readonly SQLiteConnection _connection;
 
 		private Database(string databaseName)
 		{
@@ -103,10 +104,9 @@ namespace Scripts.Database
 			List<string> result = new() { };
 
 			IEnumerable<Image> databaseData = this._connection.Table<Image>();
-			foreach (Image elem in databaseData)
+			foreach (string elem in databaseData.Select(image => image.ImageBase64))
 			{
-				string image = elem.ImageBase64;
-				result.Add(image);
+				result.Add(elem);
 			}
 
 			return result;
