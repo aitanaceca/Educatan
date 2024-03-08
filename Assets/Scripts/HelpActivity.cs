@@ -24,8 +24,9 @@ namespace Scripts.HelpActivity
 
         private void Start()
         {
+            Database.Database database = Database.Database.InitializeDatabase("Database.db");
             image = helpImage;
-            images = Database.Database.GetImagesTableData();
+            images = database.GetImagesTableData();
             LoadImage(currentIndex);
             backButton.onClick.AddListener(LoginView);
             prevButton.onClick.AddListener(LoadPreviousImage);
