@@ -38,8 +38,8 @@ namespace Scripts.LoginScript
 
         private void HelpView()
         {
-            Database.Database.InitializeDatabase("Database.db");
-            Database.Database.CreateTables();
+            Database.Database database = Database.Database.InitializeDatabase("Database.db");
+            database.CreateTables();
             SceneManager.LoadScene((int)GameScene.HELP);
         }
 

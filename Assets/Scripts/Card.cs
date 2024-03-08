@@ -18,7 +18,8 @@ namespace Scripts.Card
 
         private void LoadCardsText()
         {
-            Cards = Database.Database.GetTextTableData(Num, Element, ChangeElement);
+            Database.Database database = Database.Database.InitializeDatabase("Database.db");
+            Cards = database.GetTextTableData(Num, Element, ChangeElement);
         }
 
         public Card(string element, int num, string changeElement)
