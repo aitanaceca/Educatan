@@ -7,12 +7,6 @@ namespace Scripts.Card
 {
     public class Card
     {
-        const string WATER = "agua";
-        const string FIRE = "fuego";
-        const string WOOD = "madera";
-        const string SAND = "arena";
-        const string GRASS = "hierba";
-
         public string Element { get; set; }
         public int Num { get; set; }
         public int ElementCount { get; set; }

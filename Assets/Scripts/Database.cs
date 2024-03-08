@@ -13,15 +13,15 @@ namespace Scripts.Database
 	{
 		private static SQLiteConnection _connection;
 
-		public Database(string DatabaseName)
+		private Database(string databaseName)
 		{
-			var filepath = string.Format("{0}/{1}", Application.persistentDataPath, DatabaseName);
+			var filepath = string.Format("{0}/{1}", Application.persistentDataPath, databaseName);
 
 			if (!File.Exists(filepath))
 			{
 				Debug.Log("Database not in Persistent path");
 
-				UnityWebRequest loadDb = UnityWebRequest.Get("jar:file://" + Application.dataPath + "!/assets/" + DatabaseName);
+				UnityWebRequest loadDb = UnityWebRequest.Get("jar:file://" + Application.dataPath + "!/assets/" + databaseName);
 				loadDb.SendWebRequest();
 
 				if (loadDb.result != UnityWebRequest.Result.ConnectionError)
@@ -35,11 +35,15 @@ namespace Scripts.Database
 			_connection = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
 		}
 
+		public static void InitializeDatabase(string databaseName)
+        {
+			new Database(databaseName);
+        }
+
 		public static void CreateTables()
         {
 			InsertCardData();
 			InsertImageData();
-
 		}
 
 		private static void InsertCardData()
