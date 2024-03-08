@@ -11,10 +11,12 @@ namespace Scripts.HelpActivity
 {
     public class HelpActivity : MonoBehaviour
     {
-        public Image helpImage;
-        public Button backButton;
-        public Button prevButton;
-        public Button nextButton;
+        public Image HelpImage;
+        public Button BackButton;
+        public Button PrevButton;
+        public Button NextButton;
+
+        private Image _helpImage;
 
         private List<string> images;
         private int currentIndex = 0;
@@ -24,13 +26,14 @@ namespace Scripts.HelpActivity
 
         private void Start()
         {
+            _helpImage = HelpImage;
             Database.Database database = Database.Database.InitializeDatabase("Database.db");
-            image = helpImage;
+            image = _helpImage;
             images = database.GetImagesTableData();
             LoadImage(currentIndex);
-            backButton.onClick.AddListener(LoginView);
-            prevButton.onClick.AddListener(LoadPreviousImage);
-            nextButton.onClick.AddListener(LoadNextImage);
+            BackButton.onClick.AddListener(LoginView);
+            PrevButton.onClick.AddListener(LoadPreviousImage);
+            NextButton.onClick.AddListener(LoadNextImage);
         }
 
         private void LoginView()
@@ -64,7 +67,7 @@ namespace Scripts.HelpActivity
 
         private void Update()
         {
-            helpImage = image;
+            _helpImage = image;
         }
     }
 }
