@@ -10,6 +10,7 @@ using System.Reflection;
 using Vuforia;
 using System.Threading;
 using TMPro;
+using System.Linq;
 
 namespace Scripts.Animation
 {
@@ -82,23 +83,27 @@ namespace Scripts.Animation
             _dice.SetActive(true);
         }
 
+        private bool IsBridgeTransform(Transform bridge)
+        {
+            return bridge.name.Contains("Puente");
+        }
+
         private void ShowBridges()
         {
             Transform[] boardTransforms = _board.GetComponentsInChildren<Transform>();
 
-            foreach (var elem in boardTransforms)
+            foreach (Transform elemTransform in boardTransforms.Select(elem => elem.transform))
             {
-                Transform elemTransform = elem.transform;
-
                 foreach (Transform bridge in elemTransform)
                 {
-                    if (bridge.name.Contains("Puente"))
+                    if (IsBridgeTransform(bridge))
                     {
                         bridge.gameObject.SetActive(true);
-                    }                   
+                    }
                 }
             }
         }
+
 
         protected override void OnTrackingFound()
         {
