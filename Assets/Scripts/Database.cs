@@ -14,23 +14,18 @@ namespace Scripts.Database
 	{
 		private readonly SQLiteConnection _connection;
 
-		private Database(string databaseName)
+		public Database(string DatabaseName)
 		{
-			var filepath = string.Format("{0}/{1}", Application.persistentDataPath, databaseName);
+			var filepath = string.Format("{0}/{1}", Application.persistentDataPath, DatabaseName);
 
 			if (!File.Exists(filepath))
 			{
-				Debug.Log("Database not in Persistent path");
+				var loadDb = new WWW("jar:file://" + Application.dataPath + "!/assets/" + DatabaseName);
+				while (!loadDb.isDone) { }
 
-				UnityWebRequest loadDb = UnityWebRequest.Get("jar:file://" + Application.dataPath + "!/assets/" + databaseName);
-				loadDb.SendWebRequest();
-
-				if (loadDb.result != UnityWebRequest.Result.ConnectionError)
-				{
-					byte[] fileData = loadDb.downloadHandler.data;
-					File.WriteAllBytes(filepath, fileData);
-				}
+				File.WriteAllBytes(filepath, loadDb.bytes);
 			}
+
 			var dbPath = filepath;
 
 			_connection = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
