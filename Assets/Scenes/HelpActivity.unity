@@ -1141,10 +1141,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862403ef74e8c984ebe2780b6d48fbd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HelpImage: {fileID: 136337165}
-  BackButton: {fileID: 1257936744}
-  PrevButton: {fileID: 2105083309}
-  NextButton: {fileID: 1337106192}
+  _helpImage: {fileID: 136337165}
+  _backButton: {fileID: 1257936744}
+  _prevButton: {fileID: 2105083309}
+  _nextButton: {fileID: 1337106192}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

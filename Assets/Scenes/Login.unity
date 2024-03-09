@@ -2004,12 +2004,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aea021911ce8c424cb9b59cf6b09ec57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameInput: {fileID: 593684184}
-  ageInput: {fileID: 258536975}
-  nameError: {fileID: 487203802}
-  ageError: {fileID: 1887182633}
-  loginButton: {fileID: 1238068338}
-  helpButton: {fileID: 45009680}
+  _nameInput: {fileID: 593684184}
+  _ageInput: {fileID: 258536975}
+  _nameError: {fileID: 487203802}
+  _ageError: {fileID: 1887182633}
+  _loginButton: {fileID: 1238068338}
+  _helpButton: {fileID: 45009680}
 --- !u!114 &1609607584
 MonoBehaviour:
   m_ObjectHideFlags: 0
