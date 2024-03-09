@@ -325,62 +325,64 @@ namespace Scripts.TouchDice
 
         private (string, int) ApplyCardRestriction(int diceNumber, int nextCard, string elementName, Transform characterTransform)
         {
-            if (currentCardRestriction.Item2 != null)
+            if (currentCardRestriction.Item2 == null)
             {
-                switch (currentCardRestriction.Item1)
-                {
-                    case 0:
-                        if (diceNumber == currentCardRestriction.Item2.Num)
-                        {
-                            return (currentCardRestriction.Item2.Element, -1);
-                        }
-                        break;
-                    case 1:
-                        if (diceNumber == currentCardRestriction.Item2.Num)
-                        {
+                return (elementName, 1);
+            }
 
-                            return (currentCardRestriction.Item2.Element, 1);
-                        }
-                        break;
-                    case 2:
-                        if (diceNumber == currentCardRestriction.Item2.Num && !cardIsApplied)
+            switch (currentCardRestriction.Item1)
+            {
+                case 0:
+                    if (diceNumber == currentCardRestriction.Item2.Num)
+                    {
+                        return (currentCardRestriction.Item2.Element, -1);
+                    }
+                    break;
+                case 1:
+                    if (diceNumber == currentCardRestriction.Item2.Num)
+                    {
+
+                        return (currentCardRestriction.Item2.Element, 1);
+                    }
+                    break;
+                case 2:
+                    if (diceNumber == currentCardRestriction.Item2.Num && !cardIsApplied)
+                    {
+                        cardIsApplied = true;
+                        return (currentCardRestriction.Item2.Element, 1);
+                    }
+                    break;
+                case 3:
+                    if (diceNumber == currentCardRestriction.Item2.Num && !cardIsApplied)
+                    {
+                        cardIsApplied = true;
+                        return (currentCardRestriction.Item2.Element, -1);
+                    }
+                    break;
+                case 4:
+                    if (diceNumber == currentCardRestriction.Item2.Num && nextCard <= 2)
+                    {
+                        MoveCharacter(_firsElementTransform, characterTransform);
+                        characterMovedToFirstElement = true;
+                        if (nextCard == 2)
                         {
                             cardIsApplied = true;
-                            return (currentCardRestriction.Item2.Element, 1);
                         }
-                        break;
-                    case 3:
-                        if (diceNumber == currentCardRestriction.Item2.Num && !cardIsApplied)
+                        return (currentCardRestriction.Item2.Element, 1);
+                    }
+                    break;
+                case 5:
+                    GameObject element = GameObject.Find(elementName);
+                    string materialName = element.GetComponent<MeshRenderer>().material.name;
+                    if (nextCard <= 3 && materialName.Contains(currentCardRestriction.Item2.Element))
+                    {
+                        if (nextCard == 3)
                         {
                             cardIsApplied = true;
-                            return (currentCardRestriction.Item2.Element, -1);
                         }
-                        break;
-                    case 4:
-                        if (diceNumber == currentCardRestriction.Item2.Num && nextCard <= 2)
-                        {            
-                            MoveCharacter(_firsElementTransform, characterTransform);
-                            characterMovedToFirstElement = true;
-                            if (nextCard == 2)
-                            {
-                                cardIsApplied = true;
-                            }
-                            return (currentCardRestriction.Item2.Element, 1);
-                        }
-                        break;
-                    case 5:
-                        GameObject element = GameObject.Find(elementName);
-                        string materialName = element.GetComponent<MeshRenderer>().material.name;
-                        if (nextCard <= 3 && materialName.Contains(currentCardRestriction.Item2.Element))
-                        {
-                            if (nextCard == 3)
-                            {
-                                cardIsApplied = true;
-                            }
-                            return (currentCardRestriction.Item2.ChangeElement, 1);
-                        }
-                        break;
-                }
+                        return (currentCardRestriction.Item2.ChangeElement, 1);
+                    }
+                    break;
             }
 
             return (elementName, 1);
