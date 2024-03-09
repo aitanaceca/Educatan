@@ -180,12 +180,8 @@ namespace Scripts.TouchDice
             set { _cardText = value; }
         }
 
-        private TMP_Text diceNumberText;
-
         private readonly List<string> diceFaces = new() { "Cara1", "Cara2", "Cara3", "Cara4", "Cara5", "Cara6" };
         private readonly List<string> diceAnimations = new() { "dice1", "dice2", "dice3", "dice4", "dice5", "dice6" };
-
-        private int finalRandomNumber;
 
         private int currentPosition = 0;
         private readonly List<string> roadElements = new()
@@ -557,6 +553,8 @@ namespace Scripts.TouchDice
 
         void Update()
         {
+            TMP_Text diceNumberText;
+            int finalRandomNumber;
             InitializeElements();
             _bagButton.onClick.AddListener(OpenOrCloseBag);
             _checkCardButton.onClick.AddListener(ShowCardOnClickCardButton);
