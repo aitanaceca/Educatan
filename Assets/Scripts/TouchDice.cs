@@ -330,6 +330,9 @@ namespace Scripts.TouchDice
                 return (elementName, 1);
             }
 
+            bool checkStopRestrictionCondition = diceNumber == currentCardRestriction.Item2.Num && !cardIsApplied;
+            bool checkStopRestrictionConditionByTimes = diceNumber == currentCardRestriction.Item2.Num && nextCard <= 2;
+
             switch (currentCardRestriction.Item1)
             {
                 case 0:
@@ -346,28 +349,25 @@ namespace Scripts.TouchDice
                     }
                     break;
                 case 2:
-                    if (diceNumber == currentCardRestriction.Item2.Num && !cardIsApplied)
+                    if (checkStopRestrictionCondition)
                     {
                         cardIsApplied = true;
                         return (currentCardRestriction.Item2.Element, 1);
                     }
                     break;
                 case 3:
-                    if (diceNumber == currentCardRestriction.Item2.Num && !cardIsApplied)
+                    if (checkStopRestrictionCondition)
                     {
                         cardIsApplied = true;
                         return (currentCardRestriction.Item2.Element, -1);
                     }
                     break;
                 case 4:
-                    if (diceNumber == currentCardRestriction.Item2.Num && nextCard <= 2)
+                    if (checkStopRestrictionConditionByTimes)
                     {
                         MoveCharacter(_firsElementTransform, characterTransform);
                         characterMovedToFirstElement = true;
-                        if (nextCard == 2)
-                        {
-                            cardIsApplied = true;
-                        }
+                        cardIsApplied = (nextCard == 2);
                         return (currentCardRestriction.Item2.Element, 1);
                     }
                     break;
@@ -376,10 +376,7 @@ namespace Scripts.TouchDice
                     string materialName = element.GetComponent<MeshRenderer>().material.name;
                     if (nextCard <= 3 && materialName.Contains(currentCardRestriction.Item2.Element))
                     {
-                        if (nextCard == 3)
-                        {
-                            cardIsApplied = true;
-                        }
+                        cardIsApplied = (nextCard == 3);
                         return (currentCardRestriction.Item2.ChangeElement, 1);
                     }
                     break;
