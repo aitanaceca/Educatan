@@ -551,16 +551,93 @@ namespace Scripts.TouchDice
             _cardText = CardText;
         }
 
+        private List<string> GetPossiblePositions(TMP_Text diceNumberText, int diceNumberTextToInt)
+        {
+            System.Random random = new();
+
+            // Genera un numero aleatorio entre 0 y 5
+            int randomNumber = random.Next(0, diceAnimations.Count);
+
+            _diceAnimator.Play(diceAnimations[randomNumber]);
+
+            int finalRandomNumber = randomNumber + 1;
+            diceNumberText.text = finalRandomNumber.ToString();
+
+            BlockDice();
+
+            diceNumberTextToInt = int.Parse(diceNumberText.text);
+            return ShowPossibleElements(possiblePositions, diceNumberTextToInt);
+        }
+
+        private void StopPositionsAnimation(List<string> possiblePositions)
+        {
+            foreach (var position in possiblePositions)
+            {
+                int index = roadElements.IndexOf(position);
+                string triggerName = upElementsAnimationNames[index];
+                string stopTrigger = triggerName + "Stop";
+                _boardAnimator.SetTrigger(stopTrigger);
+            }
+        }
+
+        private void MoveCharacterToNewPosition(Transform currentTransform, Transform characterTransform)
+        {
+            _character.SetActive(false);
+            MoveCharacter(currentTransform, characterTransform);
+            _character.SetActive(true);
+        }
+
+        private void ShowCardIfUserHasReachedFourTimes()
+        {
+            int cardRandomIndex = GetRandomIndex(6);
+            Card.Card randomCard = GetRandomCard();
+            ShowCard(cardRandomIndex, randomCard);
+            _cardButton.onClick.AddListener(HideCard);
+            currentCardRestriction = (cardRandomIndex, randomCard);
+
+            nextCard = 0;
+            ShowCheckCardCanvas();
+        }
+
+        private CounterText.CounterText ShowUpdatedCounters(TMP_Text diceNumberText, string elementName, Transform characterTransform)
+        {
+            (string, int) elementsForCounter = ApplyCardRestriction(int.Parse(diceNumberText.text), nextCard, elementName, characterTransform);
+            CounterText.CounterText updateCounter = UpdateElementCounter(elementsForCounter.Item1, elementsForCounter.Item2);
+
+            _fireCounter.text = updateCounter.FireCounter;
+            _waterCounter.text = updateCounter.WaterCounter;
+            _grassCounter.text = updateCounter.GrassCounter;
+            _sandCounter.text = updateCounter.SandCounter;
+            _woodCounter.text = updateCounter.WoodCounter;
+
+            ChangeCountersColor(updateCounter);
+            return updateCounter;
+        }
+
+        private void UpdateCurrentPosition(string elementName)
+        {
+            if (characterMovedToFirstElement)
+            {
+                currentPosition = roadElements.IndexOf("Elemento19");
+            }
+            else
+            {
+                currentPosition = roadElements.IndexOf(elementName);
+            }
+            characterMovedToFirstElement = false;
+            possiblePositions = new() { };
+        }
+
         void Update()
         {
             TMP_Text diceNumberText;
-            int finalRandomNumber;
             InitializeElements();
             _bagButton.onClick.AddListener(OpenOrCloseBag);
             _checkCardButton.onClick.AddListener(ShowCardOnClickCardButton);
             diceNumberText = _diceNumber.GetComponent<TMP_Text>();
             diceNumberText.enabled = false;
             int diceNumberTextToInt = 0;
+            Transform characterTransform = _mainCharacterTransform;
 
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
             {
@@ -571,78 +648,30 @@ namespace Scripts.TouchDice
                 {
                     if (diceFaces.Contains(hit.transform.name))
                     {
-                        System.Random random = new();
-
-                        // Genera un numero aleatorio entre 0 y 5
-                        int randomNumber = random.Next(0, diceAnimations.Count);
-
-                        _diceAnimator.Play(diceAnimations[randomNumber]);
-
-                        finalRandomNumber = randomNumber + 1;
-                        diceNumberText.text = finalRandomNumber.ToString();
-
-                        BlockDice();
-
-                        diceNumberTextToInt = int.Parse(diceNumberText.text);
-                        possiblePositions = ShowPossibleElements(possiblePositions, diceNumberTextToInt);
+                        possiblePositions = GetPossiblePositions(diceNumberText, diceNumberTextToInt);
                     }
 
                     if (possiblePositions.Contains(hit.transform.name))
-                    {                                         
+                    {
                         // Parar animaciones de elementos que se levantan
-                        foreach (var position in possiblePositions)
-                        {
-                            int index = roadElements.IndexOf(position);
-                            string triggerName = upElementsAnimationNames[index];
-                            string stopTrigger = triggerName + "Stop";
-                            _boardAnimator.SetTrigger(stopTrigger);
-                        }
-                        
+                        StopPositionsAnimation(possiblePositions);
+
                         // Movimiento del personaje.
-                        Transform characterTransform = _mainCharacterTransform;
+                        MoveCharacterToNewPosition(hit.transform, characterTransform);
 
-                        _character.SetActive(false);
-                        MoveCharacter(hit.transform, characterTransform);
-                        _character.SetActive(true);
-
-                        // Actualizar contadores.
+                        // Comprobar si el usuario ha tirado 4 veces
                         nextCard += 1;
-
                         if (nextCard == 4)
                         {
                             // Mostrar tarjeta.
-                            int cardRandomIndex = GetRandomIndex(6);
-                            Card.Card randomCard = GetRandomCard();
-                            ShowCard(cardRandomIndex, randomCard);
-                            _cardButton.onClick.AddListener(HideCard);
-                            currentCardRestriction = (cardRandomIndex, randomCard);
-
-                            nextCard = 0;
-                            ShowCheckCardCanvas();
+                            ShowCardIfUserHasReachedFourTimes();
                         }
 
-                        (string, int) elementsForCounter = ApplyCardRestriction(int.Parse(diceNumberText.text), nextCard, hit.transform.name, characterTransform);
-                        CounterText.CounterText updateCounter = UpdateElementCounter(elementsForCounter.Item1, elementsForCounter.Item2);
-                        
-                        _fireCounter.text = updateCounter.FireCounter;
-                        _waterCounter.text = updateCounter.WaterCounter;
-                        _grassCounter.text = updateCounter.GrassCounter;
-                        _sandCounter.text = updateCounter.SandCounter;
-                        _woodCounter.text = updateCounter.WoodCounter;
-
-                        ChangeCountersColor(updateCounter);
+                        // Actualizar contadores.
+                        CounterText.CounterText updateCounter = ShowUpdatedCounters(diceNumberText, hit.transform.name, characterTransform);
 
                         // Actualizar currentPossition.
-                        if(characterMovedToFirstElement)
-                        {
-                            currentPosition = roadElements.IndexOf("Elemento19");
-                        }
-                        else
-                        {
-                            currentPosition = roadElements.IndexOf(hit.transform.name);
-                        }
-                        characterMovedToFirstElement = false;
-                        possiblePositions = new() { };
+                        UpdateCurrentPosition(hit.transform.name);
                         EnableDice();
 
                         if (CheckIfUserHasReachedGoal(updateCounter))
