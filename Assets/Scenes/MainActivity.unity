@@ -8545,45 +8545,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39bcb9bd1db7e014b8282f2ea04b550b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dice: {fileID: 1665344496}
-  diceNumber: {fileID: 1306368568}
-  card: {fileID: 645619570}
-  mainCharacter: {fileID: 1506702289}
-  bagCanvas: {fileID: 611078411}
-  counterCanvas: {fileID: 1237876191}
-  checkCardCanvas: {fileID: 727855783}
-  bagOpen: {fileID: 1221035274}
-  fireCounter: {fileID: 108487728}
-  waterCounter: {fileID: 554223419}
-  grassCounter: {fileID: 1917411169}
-  sandCounter: {fileID: 1804892572}
-  woodCounter: {fileID: 562607775}
-  level: {fileID: 89332416}
-  levelInfo: {fileID: 1621198085}
-  waterMaterial: {fileID: 2100000, guid: 142e6aede49221246b381a64635e0b2e, type: 2}
-  sandMaterial: {fileID: 2100000, guid: 7513570530a8fce46ab9c9d8213735c9, type: 2}
-  fireMaterial: {fileID: 2100000, guid: a66ae05a40d15bc42b9f8ca67cbb72ac, type: 2}
-  grassMaterial: {fileID: 2100000, guid: 2181f054c40578f48bf4ebc9bd531b2d, type: 2}
-  woodMaterial: {fileID: 2100000, guid: 9a06f338d45688f4eb3a27d7198ee220, type: 2}
-  element1: {fileID: 139667792}
-  element2: {fileID: 1908781042}
-  element3: {fileID: 1821819578}
-  element4: {fileID: 2078892215}
-  element5: {fileID: 1045079152}
-  element6: {fileID: 967592428}
-  element7: {fileID: 717572326}
-  element8: {fileID: 1340754846}
-  element9: {fileID: 1505571197}
-  element10: {fileID: 318440283}
-  element11: {fileID: 1296542887}
-  element12: {fileID: 1481544871}
-  element13: {fileID: 1993958728}
-  element14: {fileID: 677065701}
-  element15: {fileID: 586618775}
-  element16: {fileID: 2126058882}
-  element17: {fileID: 1160659592}
-  element18: {fileID: 531303596}
-  element19: {fileID: 1404627616}
+  _dice: {fileID: 1665344496}
+  _diceNumber: {fileID: 1306368568}
+  _card: {fileID: 645619570}
+  _mainCharacter: {fileID: 1506702289}
+  _bagCanvas: {fileID: 611078411}
+  _counterCanvas: {fileID: 1237876191}
+  _checkCardCanvas: {fileID: 727855783}
+  _bagOpen: {fileID: 1221035274}
+  _element1: {fileID: 139667792}
+  _element2: {fileID: 1908781042}
+  _element3: {fileID: 1821819578}
+  _element4: {fileID: 2078892215}
+  _element5: {fileID: 1045079152}
+  _element6: {fileID: 967592428}
+  _element7: {fileID: 717572326}
+  _element8: {fileID: 1340754846}
+  _element9: {fileID: 1505571197}
+  _element10: {fileID: 318440283}
+  _element11: {fileID: 1296542887}
+  _element12: {fileID: 1481544871}
+  _element13: {fileID: 1993958728}
+  _element14: {fileID: 677065701}
+  _element15: {fileID: 586618775}
+  _element16: {fileID: 2126058882}
+  _element17: {fileID: 1160659592}
+  _element18: {fileID: 531303596}
+  _element19: {fileID: 1404627616}
+  _fireCounter: {fileID: 108487728}
+  _waterCounter: {fileID: 554223419}
+  _grassCounter: {fileID: 1917411169}
+  _sandCounter: {fileID: 1804892572}
+  _woodCounter: {fileID: 562607775}
+  _level: {fileID: 89332416}
+  _levelInfo: {fileID: 1621198085}
+  _waterMaterial: {fileID: 2100000, guid: 142e6aede49221246b381a64635e0b2e, type: 2}
+  _sandMaterial: {fileID: 2100000, guid: 7513570530a8fce46ab9c9d8213735c9, type: 2}
+  _fireMaterial: {fileID: 2100000, guid: a66ae05a40d15bc42b9f8ca67cbb72ac, type: 2}
+  _grassMaterial: {fileID: 2100000, guid: 2181f054c40578f48bf4ebc9bd531b2d, type: 2}
+  _woodMaterial: {fileID: 2100000, guid: 9a06f338d45688f4eb3a27d7198ee220, type: 2}
 --- !u!95 &831360723
 Animator:
   serializedVersion: 5
