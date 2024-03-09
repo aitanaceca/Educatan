@@ -21,7 +21,10 @@ namespace Scripts.Database
 			if (!File.Exists(filepath))
 			{
 				var loadDb = new WWW("jar:file://" + Application.dataPath + "!/assets/" + DatabaseName);
-				while (!loadDb.isDone) { }
+				while (!loadDb.isDone)
+				{
+					Debug.Log("Filling database.");
+				}
 
 				File.WriteAllBytes(filepath, loadDb.bytes);
 			}

@@ -551,7 +551,7 @@ namespace Scripts.TouchDice
             _cardText = CardText;
         }
 
-        private List<string> GetPossiblePositions(TMP_Text diceNumberText, int diceNumberTextToInt)
+        private List<string> GetPossiblePositions(TMP_Text diceNumberText)
         {
             System.Random random = new();
 
@@ -565,7 +565,7 @@ namespace Scripts.TouchDice
 
             BlockDice();
 
-            diceNumberTextToInt = int.Parse(diceNumberText.text);
+            int diceNumberTextToInt = int.Parse(diceNumberText.text);
             return ShowPossibleElements(possiblePositions, diceNumberTextToInt);
         }
 
@@ -628,15 +628,33 @@ namespace Scripts.TouchDice
             possiblePositions = new() { };
         }
 
+        private void CheckIfHaveToShowCard()
+        {
+            nextCard += 1;
+            if (nextCard == 4)
+            {
+                // Mostrar tarjeta.
+                ShowCardIfUserHasReachedFourTimes();
+            }
+        }
+
+        private void CheckIfHaveToShowEndCard(CounterText.CounterText updateCounter)
+        {
+            if (CheckIfUserHasReachedGoal(updateCounter))
+            {
+                ShowEndCard();
+                _cardButton.onClick.AddListener(ChangeLevel);
+            }
+        }
+
         void Update()
         {
-            TMP_Text diceNumberText;
             InitializeElements();
+            TMP_Text diceNumberText;
             _bagButton.onClick.AddListener(OpenOrCloseBag);
             _checkCardButton.onClick.AddListener(ShowCardOnClickCardButton);
             diceNumberText = _diceNumber.GetComponent<TMP_Text>();
             diceNumberText.enabled = false;
-            int diceNumberTextToInt = 0;
             Transform characterTransform = _mainCharacterTransform;
 
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
@@ -648,24 +666,19 @@ namespace Scripts.TouchDice
                 {
                     if (diceFaces.Contains(hit.transform.name))
                     {
-                        possiblePositions = GetPossiblePositions(diceNumberText, diceNumberTextToInt);
+                        possiblePositions = GetPossiblePositions(diceNumberText);
                     }
 
                     if (possiblePositions.Contains(hit.transform.name))
                     {
-                        // Parar animaciones de elementos que se levantan
+                        // Parar animaciones de elementos que se levantan.
                         StopPositionsAnimation(possiblePositions);
 
                         // Movimiento del personaje.
                         MoveCharacterToNewPosition(hit.transform, characterTransform);
 
-                        // Comprobar si el usuario ha tirado 4 veces
-                        nextCard += 1;
-                        if (nextCard == 4)
-                        {
-                            // Mostrar tarjeta.
-                            ShowCardIfUserHasReachedFourTimes();
-                        }
+                        // Comprobar si el usuario ha tirado 4 veces.
+                        CheckIfHaveToShowCard();
 
                         // Actualizar contadores.
                         CounterText.CounterText updateCounter = ShowUpdatedCounters(diceNumberText, hit.transform.name, characterTransform);
@@ -674,11 +687,8 @@ namespace Scripts.TouchDice
                         UpdateCurrentPosition(hit.transform.name);
                         EnableDice();
 
-                        if (CheckIfUserHasReachedGoal(updateCounter))
-                        {
-                            ShowEndCard();
-                            _cardButton.onClick.AddListener(ChangeLevel);
-                        }
+                        // Comprueba si se ha terminado el nivel.
+                        CheckIfHaveToShowEndCard(updateCounter);
                     }
                 }
             }
