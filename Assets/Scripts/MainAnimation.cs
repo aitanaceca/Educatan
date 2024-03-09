@@ -83,9 +83,12 @@ namespace Scripts.Animation
             _dice.SetActive(true);
         }
 
-        private bool IsBridgeTransform(Transform bridge)
+        private void IsBridgeTransform(Transform bridge)
         {
-            return bridge.name.Contains("Puente");
+            if (bridge.name.Contains("Puente"))
+            {
+                bridge.gameObject.SetActive(true);
+            }
         }
 
         private void ShowBridges()
@@ -96,14 +99,10 @@ namespace Scripts.Animation
             {
                 foreach (Transform bridge in elemTransform)
                 {
-                    if (IsBridgeTransform(bridge))
-                    {
-                        bridge.gameObject.SetActive(true);
-                    }
+                    IsBridgeTransform(bridge);
                 }
             }
         }
-
 
         protected override void OnTrackingFound()
         {
