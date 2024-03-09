@@ -292,8 +292,6 @@ namespace Scripts.MainActivity
             set { _woodMaterial = value; }
         }
 
-        private TMP_Text diceNumberText;
-
         private void InitializeElements()
         {
             _dice = Dice;
@@ -372,7 +370,7 @@ namespace Scripts.MainActivity
             _dice.SetActive(false);
             _mainCharacter.SetActive(false);
             _card.SetActive(false);
-            diceNumberText = _diceNumber.GetComponent<TMP_Text>();
+            TMP_Text diceNumberText = _diceNumber.GetComponent<TMP_Text>();
             diceNumberText.enabled = false;
             _bagCanvas.SetActive(false);
             _checkCardCanvas.SetActive(false);
