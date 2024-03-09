@@ -323,15 +323,27 @@ namespace Scripts.TouchDice
             _card.SetActive(true);
         }
 
+        private bool CheckStopRestrictionCondition(int diceNumber)
+        {
+            return diceNumber == currentCardRestriction.Item2.Num && !cardIsApplied;
+        }
+
+        private bool CheckStopRestrictionConditionByTimes(int diceNumber, int nextCard)
+        {
+            return diceNumber == currentCardRestriction.Item2.Num && nextCard <= 2;
+        }
+        
+        private bool CheckIfMaterialSatisfyRestriction(int nextCard, string materialName)
+        {
+            return nextCard <= 3 && materialName.Contains(currentCardRestriction.Item2.Element);
+        }
+
         private (string, int) ApplyCardRestriction(int diceNumber, int nextCard, string elementName, Transform characterTransform)
         {
             if (currentCardRestriction.Item2 == null)
             {
                 return (elementName, 1);
             }
-
-            bool checkStopRestrictionCondition = diceNumber == currentCardRestriction.Item2.Num && !cardIsApplied;
-            bool checkStopRestrictionConditionByTimes = diceNumber == currentCardRestriction.Item2.Num && nextCard <= 2;
 
             switch (currentCardRestriction.Item1)
             {
@@ -349,21 +361,21 @@ namespace Scripts.TouchDice
                     }
                     break;
                 case 2:
-                    if (checkStopRestrictionCondition)
+                    if (CheckStopRestrictionCondition(diceNumber))
                     {
                         cardIsApplied = true;
                         return (currentCardRestriction.Item2.Element, 1);
                     }
                     break;
                 case 3:
-                    if (checkStopRestrictionCondition)
+                    if (CheckStopRestrictionCondition(diceNumber))
                     {
                         cardIsApplied = true;
                         return (currentCardRestriction.Item2.Element, -1);
                     }
                     break;
                 case 4:
-                    if (checkStopRestrictionConditionByTimes)
+                    if (CheckStopRestrictionConditionByTimes(diceNumber, nextCard))
                     {
                         MoveCharacter(_firsElementTransform, characterTransform);
                         characterMovedToFirstElement = true;
@@ -374,7 +386,7 @@ namespace Scripts.TouchDice
                 case 5:
                     GameObject element = GameObject.Find(elementName);
                     string materialName = element.GetComponent<MeshRenderer>().material.name;
-                    if (nextCard <= 3 && materialName.Contains(currentCardRestriction.Item2.Element))
+                    if (CheckIfMaterialSatisfyRestriction(nextCard, materialName))
                     {
                         cardIsApplied = (nextCard == 3);
                         return (currentCardRestriction.Item2.ChangeElement, 1);
