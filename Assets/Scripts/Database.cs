@@ -14,7 +14,7 @@ namespace Scripts.Database
 	{
 		private readonly SQLiteConnection _connection;
 
-		public Database(string DatabaseName)
+		private Database(string DatabaseName)
 		{
 			var filepath = string.Format("{0}/{1}", Application.persistentDataPath, DatabaseName);
 
