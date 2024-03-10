@@ -11,7 +11,6 @@ jobs:
   build:
     name: Build Application
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -44,18 +43,53 @@ jobs:
           allowDirtyBuild: true
 
   sonarcloud:
-      name: SonarCloud Scanner
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
-          with:
-            fetch-depth: 0 
+    name: SonarCloud Scanner
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 
 
-        - name: Copy sonar-scanner.properties
-          run: cp .github/workflows/sonar-project.properties ./
+      - name: Copy sonar-scanner.properties
+        run: cp .github/workflows/sonar-project.properties ./
 
-        - name: SonarCloud Scan
-          uses: SonarSource/sonarcloud-github-action@master
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+            
+  testing:
+    name: Unit Testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create LFS file list
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+      - name: Restore LFS cache
+        uses: actions/cache@v2
+        id: lfs-cache
+        with:
+          path: .git/lfs
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+      - name: Git LFS Pull
+        run: |
+          git lfs pull
+          git add .
+          git reset --hard
+
+      - uses: game-ci/unity-test-runner@v4
+        id: testRunner
+        with:
+          projectPath: ./../
+          testMode: playmode
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Test results (play mode)
+          path: ${{ steps.testRunner.outputs.artifactsPath }}
+
