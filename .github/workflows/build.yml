@@ -43,7 +43,7 @@ jobs:
           projectBaseDir: ./../
           allowDirtyBuild: true
 
-    sonarcloud:
+  sonarcloud:
       name: SonarCloud Scanner
       runs-on: ubuntu-latest
       steps:
