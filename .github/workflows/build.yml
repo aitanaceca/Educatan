@@ -82,13 +82,19 @@ jobs:
           git add .
           git reset --hard
 
-      - uses: game-ci/unity-test-runner@v4
-        id: testRunner
+      - name: Run test
+        uses: game-ci/unity-test-runner@v4
+        id: unitTesting
+        env:
+            UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+            UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+            UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           projectPath: Educatan/Assets/Test
           testMode: playmode
 
-      - uses: actions/upload-artifact@v2
+      - name: Show Results
+        uses: actions/upload-artifact@v2
         with:
           name: Test results (play mode)
           path: ${{ steps.testRunner.outputs.artifactsPath }}
