@@ -100,5 +100,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Test results (play mode)
-          path: ${{ steps.testRunner.outputs.artifactsPath }}
+          path: ./.github/artifacts
 
