@@ -80,10 +80,7 @@ jobs:
         run: |
           git lfs pull
           git add .
-          git reset --hard
-
-      - name: Show current path
-        run: echo "$PWD"    
+          git reset --hard 
 
       - name: Run test
         uses: game-ci/unity-test-runner@v4
