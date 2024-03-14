@@ -92,7 +92,7 @@ jobs:
         with:
           projectPath: .
           testMode: playmode
-          artifactsPath: ./.github/artifacts/tests-result.txt
+          artifactsPath: ./.github/artifacts
 
       - name: Show Results
         uses: actions/upload-artifact@v4
