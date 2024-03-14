@@ -94,7 +94,7 @@ jobs:
           testMode: playmode
 
       - name: Show Results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Test results (play mode)
           path: ./.github/artifacts/tests-result.txt
