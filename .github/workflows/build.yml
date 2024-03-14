@@ -92,8 +92,8 @@ jobs:
         with:
           projectPath: .
           testMode: playmode
-          additionalArguments: >
-            -logfile ./.github/artifacts/tests-result.txt
+          artifactsPath: ./.github/artifacts/tests-result.txt
+          customParameters: -testResults './.github/artifacts/tests-result.txt'
 
       - name: Show Results
         uses: actions/upload-artifact@v4
