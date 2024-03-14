@@ -92,10 +92,11 @@ jobs:
         with:
           projectPath: .
           testMode: playmode
-          artifactsPath: ../artifacts
+          artifactsPath: ./.github/artifacts
+          customParameters: -testResults ./.github/artifacts/tests-result.xml
 
       - name: Show Results
         uses: actions/upload-artifact@v4
         with:
-          name: Test results (play mode)
+          name: Test results
           path: ./.github/artifacts/tests-result.xml
