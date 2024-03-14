@@ -92,12 +92,11 @@ jobs:
         with:
           projectPath: .
           testMode: playmode
+          additionalArguments: >
+            -logfile ./.github/artifacts/tests-result.txt
 
       - name: Show Results
         uses: actions/upload-artifact@v4
         with:
           name: Test results (play mode)
           path: ./.github/artifacts/tests-result.txt
-      
-      - name: Log Tests Results
-        run: cat ./.github/artifacts/tests-result.txt
