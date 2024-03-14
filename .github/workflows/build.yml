@@ -97,5 +97,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Test results (play mode)
-          path: ./.github/artifacts
-
+          path: ./.github/artifacts/tests-result.txt
+          run: cat ./.github/artifacts/tests-result.txt
