@@ -12,13 +12,13 @@ jobs:
     name: Build Application
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Create LFS file list
+      - name: Create LFS File List
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 
-      - name: Restore LFS cache
+      - name: Restore LFS Cache
         uses: actions/cache@v2
         id: lfs-cache
         with:
@@ -31,7 +31,7 @@ jobs:
           git add .
           git reset --hard
       
-      - name: Set up Unity Builder
+      - name: Set Up Unity Builder
         uses: game-ci/unity-builder@v2
         env:
             UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -63,13 +63,13 @@ jobs:
     name: Unit Testing
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
 
       - name: Create LFS file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 
-      - name: Restore LFS cache
+      - name: Restore LFS Cache
         uses: actions/cache@v2
         id: lfs-cache
         with:
@@ -82,7 +82,7 @@ jobs:
           git add .
           git reset --hard 
 
-      - name: Run test
+      - name: Run Test
         uses: game-ci/unity-test-runner@v4
         id: unitTesting
         env:
@@ -98,4 +98,6 @@ jobs:
         with:
           name: Test results (play mode)
           path: ./.github/artifacts/tests-result.txt
-          run: cat ./.github/artifacts/tests-result.txt
+      
+      - name: Log Tests Results
+        run: cat ./.github/artifacts/tests-result.txt
