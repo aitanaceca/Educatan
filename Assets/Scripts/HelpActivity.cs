@@ -43,7 +43,7 @@ namespace Scripts.HelpActivity
         private List<string> images;
         private int currentIndex = 0;
         private const int MIN_INDEX = 0;
-        private const int MAX_INDEX = 5;
+        private const int MAX_INDEX = 28;
         private Image image;
 
         private void Start()
