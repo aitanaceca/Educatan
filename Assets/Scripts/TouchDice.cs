@@ -319,7 +319,7 @@ namespace Scripts.TouchDice
 
         private void ShowEndCard()
         {
-            _cardText.text = "ENHORABUENA, HAS COMPLETADO EL NIVEL.";
+            _cardText.text = "ENHORABUENA, NIVEL COMPLETADO.";
             _card.SetActive(true);
         }
 
