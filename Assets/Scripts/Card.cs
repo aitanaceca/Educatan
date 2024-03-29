@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Scripts.Database;
 
+// prueba
 namespace Scripts.Card
 {
     public class Card
